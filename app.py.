@@ -1,0 +1,95 @@
+from flask import Flask, jsonify, render_template_string
+
+app = Flask(__name__)
+
+# --- MUDASIR DATABASE ---
+DATA_RECORDS = [
+    (1, 'SAHIL RASHEED', '03247026751', '3230300000000', 'Chah Hayat Wala'),
+    (2, 'Mubashir Sharif', '03274207754', '3230300000000', 'Chah Hayat Khar'),
+    (3, 'Basheer Ahmad', '03046754893', '3230300000000', 'Gurmani Garbi'),
+    (4, 'Salman Khan', '03343606333', '3230300000000', 'Sanwan side near sheekho mils pathan baradri'),
+    (5, 'Asif Khalid', '03042016315', '03230300000009', 'Cah hayat Wala khar wala gurmani garbi'),
+    (6, 'Bilal Khan', '03264837504', '32303000000000', 'Bhatii bradri on nai wasti'),
+    (7, 'Muhammad imran', '03707830348', '3230300000000', 'Cah hayat khar wala gurmani garbi'),
+    (8, 'Malik mubashir', '03216207754', '3230300000000', 'Cah hayat khar wala gurmani garbi'),
+    (9, 'Malik khizer', '03299473272', '32303000000000', 'Cah hayat khar wala gurmani garbi'),
+    (10, 'Salman khar 2', '03211700269', 'N/A', 'Pathan bardri Near a shekooo mils on 2nd barrage'),
+    (11, 'Muhammad Imtiaz', '03286454952', '323030000000000', 'Cah hayat khar wala gurmani garbi'),
+    (12, 'Muhammad Riaz', '03287356947', '323030000000000', 'Dhalooo wala punjabi bradri'),
+    (13, 'Muhammad zeshan', '03426624485', '323030000000000', 'Kureshan wala punjabi bradri'),
+    (14, 'Imran Sabir', '03006875396', '32303000000000', 'Cah hayt khar wala gurmani garbi'),
+    (15, 'Imran Sabir', '03097481344', '32303000000000', 'Cah hayt khar wala gurmani garbi')
+]
+
+@app.route('/all')
+def get_all_data():
+    return jsonify({"records": DATA_RECORDS})
+
+@app.route('/')
+def home():
+    html_code = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>MUDASIR HACKER PRO 🔫</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: 'Courier New', monospace; background: #000; color: #00ff00; padding: 20px; text-align: center; }
+            .container { max-width: 850px; margin: auto; border: 2px solid #00ff00; padding: 30px; border-radius: 15px; box-shadow: 0 0 25px #00ff00; background: #050505; }
+            h1 { font-size: 24px; text-shadow: 0 0 10px #00ff00; color: #00ff00; margin-bottom: 30px; }
+            .input-field { width: 85%; padding: 15px; background: #111; border: 1px solid #00ff00; color: #00ff00; font-weight: bold; font-size: 18px; outline: none; margin-bottom: 20px; text-align: center; border-radius: 5px; }
+            .search-btn { width: 60%; padding: 15px; background: #00ff00; color: #000; border: none; font-weight: 900; cursor: pointer; font-size: 16px; border-radius: 5px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 30px; border: 1px solid #00ff00; display: none; }
+            th, td { border: 1px solid #333; padding: 12px; text-align: left; font-size: 13px; }
+            th { background: #003300; color: #00ff00; }
+            .status { margin-top: 15px; font-size: 14px; font-weight: bold; color: #888; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>MUDASIR HACKER PRO: CLOUD DATABASE 🔫</h1>
+            <input type="text" id="phoneSearch" class="input-field" placeholder="ENTER MOBILE NUMBER..." onkeydown="if(event.key==='Enter') executeSearch()">
+            <br>
+            <button class="search-btn" onclick="executeSearch()">SCAN DATABASE 🔎</button>
+            <div id="statusMessage" class="status">SYSTEM ONLINE - SECURE CONNECTION</div>
+            <table id="resultsTable">
+                <thead><tr><th>NAME</th><th>MOBILE</th><th>CNIC</th><th>LOCATION</th></tr></thead>
+                <tbody id="resultBody"></tbody>
+            </table>
+        </div>
+        <script>
+            async function executeSearch() {
+                const input = document.getElementById("phoneSearch").value.trim();
+                const body = document.getElementById('resultBody');
+                const table = document.getElementById('resultsTable');
+                const status = document.getElementById('statusMessage');
+                if(input.length < 3) { status.innerHTML = "❌ ENTER AT LEAST 3 DIGITS"; return; }
+                status.innerHTML = "⚡ SCANNING...";
+                try {
+                    const response = await fetch('/all');
+                    const data = await response.json();
+                    const found = data.records.filter(r => String(r[2]).includes(input));
+                    if (found.length > 0) {
+                        body.innerHTML = '';
+                        found.forEach(r => {
+                            body.innerHTML += `<tr><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`;
+                        });
+                        table.style.display = "table";
+                        status.innerHTML = "✅ ACCESS GRANTED: RECORD FOUND";
+                        status.style.color = "#00ff00";
+                    } else {
+                        table.style.display = "none";
+                        status.innerHTML = "❌ ACCESS DENIED: NO RECORD FOUND";
+                        status.style.color = "#ff0000";
+                    }
+                } catch (e) { status.innerHTML = "⚠️ API CONNECTION ERROR!"; }
+            }
+        </script>
+    </body>
+    </html>
+    """
+    return render_template_string(html_code)
+
+if __name__ == '__main__':
+    app.run(debug=True)
