@@ -6,23 +6,22 @@
     <title>MUDASIR CLOUD SCANNER - PRO</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; margin-bottom: 100px; }
-        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; position: relative; }
+        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; }
         h2 { font-size: 24px; text-shadow: 2px 2px #ff0000; letter-spacing: 2px; }
         
-        /* Big Header Ad */
-        .big-ad-unit { width: 100%; min-height: 250px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        /* Big Ads */
+        .big-ad-unit { width: 100%; min-height: 200px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; }
-        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin: 10px 0; text-transform: uppercase; }
+        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; outline: none; }
+        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin: 10px 0; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #fff; box-shadow: 0 0 20px #00ff00; }
         
-        /* Export Button */
-        .export-btn { background: #ff0000; color: #fff; width: 40%; font-size: 12px; margin-top: 10px; }
+        /* Specific Download Button */
+        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 15px auto; width: 50%; }
 
-        /* Floating Bottom Ad */
-        .sticky-bottom-ad { position: fixed; bottom: 0; left: 0; width: 100%; height: 90px; background: rgba(0,0,0,0.9); border-top: 2px solid #00ff00; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .sticky-bottom-ad { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #000; border-top: 2px solid #ff0000; z-index: 1000; display: flex; align-items: center; justify-content: center; color: white; }
 
-        .table-container { overflow-x: auto; margin-top: 20px; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; color: #00ff00; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; color: #00ff00; margin-top: 15px; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
         th { background: rgba(0, 255, 0, 0.2); }
     </style>
@@ -33,34 +32,31 @@
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
 
         <div class="big-ad-unit">
-            <div id="top-ad-placeholder">
-                <p style="color:#555;">[BIG BANNER AD 336x280]</p>
-            </div>
+            <p style="font-size: 10px; color: #444;">ADVERTISEMENT</p>
+            <div style="color:#222;">[728x90 BANNER AD]</div>
         </div>
 
         <input type="text" id="search" placeholder="ENTER MOBILE NUMBER...">
         <br>
         <button onclick="find()">START DEEP SCAN</button>
         
-        <br>
-        <button class="export-btn" onclick="downloadData()">📥 DOWNLOAD FULL DATABASE (.TXT)</button>
-
         <div id="result-area">
-            <div class="table-container" id="result"></div>
+            <div id="result-table"></div>
             
+            <button id="downloadBtn" onclick="downloadSingleRecord()">📥 DOWNLOAD THIS RECORD (.DOC)</button>
+
             <div id="after-result-ad" style="display:none;" class="big-ad-unit">
-                <p style="color:#555;">[RESULT SUCCESS AD - 300x250]</p>
+                 <p style="font-size: 10px; color: #444;">ADVERTISEMENT</p>
+                 <div style="color:#222;">[300x250 SQUARE AD]</div>
             </div>
         </div>
     </div>
 
     <div class="sticky-bottom-ad">
-        <p style="color:#00ff00; font-size:10px; margin-right:10px;">SPONSORED:</p>
-        <div style="color:#555;">[STICKY FOOTER BANNER]</div>
+        [STICKY FOOTER AD - EARN MONEY HERE]
     </div>
 
     <script>
-        // Database Array
         const data = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
             ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
@@ -71,39 +67,59 @@
             ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"]
         ];
 
+        let currentResult = null;
+
         function find() {
             let val = document.getElementById("search").value.trim();
+            let resultTable = document.getElementById("result-table");
+            let downloadBtn = document.getElementById("downloadBtn");
+            let afterAd = document.getElementById("after-result-ad");
+
             if(val === "") { alert("ENTER NUMBER!"); return; }
             
-            let res = data.filter(row => row[1].includes(val) || row[0].toLowerCase().includes(val.toLowerCase()));
-            let resultDiv = document.getElementById("result");
-            let afterAd = document.getElementById("after-result-ad");
+            let res = data.filter(row => row[1].includes(val));
             
             if(res.length > 0) {
-                let html = "<table><tr><th>NAME</th><th>PHONE</th><th>CNIC</th><th>ADDRESS</th></tr>";
-                res.forEach(r => {
-                    html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`;
-                });
-                resultDiv.innerHTML = html + "</table>";
-                afterAd.style.display = "flex"; // Show ad after results
+                currentResult = res[0]; // Store the found record
+                let html = `<table>
+                    <tr><th>NAME</th><td>${res[0][0]}</td></tr>
+                    <tr><th>PHONE</th><td>${res[0][1]}</td></tr>
+                    <tr><th>CNIC</th><td>${res[0][2]}</td></tr>
+                    <tr><th>ADDRESS</th><td>${res[0][3]}</td></tr>
+                </table>`;
+                
+                resultTable.innerHTML = html;
+                downloadBtn.style.display = "block"; // Show download button
+                afterAd.style.display = "flex"; // Show ad
             } else {
-                resultDiv.innerHTML = "<p style='color:red;'>NO RECORD FOUND</p>";
+                resultTable.innerHTML = "<p style='color:red; padding:20px;'>❌ NO RECORD IN CLOUD</p>";
+                downloadBtn.style.display = "none";
                 afterAd.style.display = "none";
+                currentResult = null;
             }
         }
 
-        // Feature: Download Data as File
-        function downloadData() {
-            let content = "MUDASIR CLOUD SCANNER - FULL DATABASE\n\n";
-            data.forEach(r => {
-                content += `Name: ${r[0]} | Phone: ${r[1]} | CNIC: ${r[2]} | Addr: ${r[3]}\n`;
-            });
+        // Function to download ONLY the searched record
+        function downloadSingleRecord() {
+            if(!currentResult) return;
+
+            let fileName = currentResult[1] + "_Detail.doc";
+            let content = `
+                MUDASIR CLOUD SCANNER - OFFICIAL REPORT
+                ---------------------------------------
+                NAME:    ${currentResult[0]}
+                PHONE:   ${currentResult[1]}
+                CNIC:    ${currentResult[2]}
+                ADDRESS: ${currentResult[3]}
+                ---------------------------------------
+                Report Generated by Mudasir Cloud System
+            `;
             
-            let blob = new Blob([content], { type: "text/plain" });
+            let blob = new Blob([content], { type: "application/msword" });
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement("a");
             a.href = url;
-            a.download = "sim_database_records.txt";
+            a.download = fileName;
             a.click();
         }
     </script>
