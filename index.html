@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDASIR CLOUD SCANNER - PRO</title>
+    <title>MUDASIR CLOUD SCANNER - PRO PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; margin-bottom: 100px; }
-        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; }
-        h2 { font-size: 24px; text-shadow: 2px 2px #ff0000; letter-spacing: 2px; }
+        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; background: #000; }
+        
+        /* Stylish Heading */
+        h2 { font-size: 26px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 3px; font-weight: bold; }
         
         /* Big Ads */
-        .big-ad-unit { width: 100%; min-height: 200px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .big-ad-unit { width: 100%; min-height: 150px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
 
-        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; outline: none; }
-        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin: 10px 0; text-transform: uppercase; transition: 0.3s; }
-        button:hover { background: #fff; box-shadow: 0 0 20px #00ff00; }
+        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; box-shadow: inset 0 0 5px #00ff00; }
         
-        /* Specific Download Button */
-        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 15px auto; width: 50%; }
+        /* Stylish Button Text */
+        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 80%; margin: 10px 0; text-transform: uppercase; font-size: 16px; letter-spacing: 1px; transition: 0.4s; box-shadow: 0 0 15px #00ff00; }
+        .search-btn:hover { background: #fff; box-shadow: 0 0 30px #00ff00; transform: scale(1.02); }
+        
+        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 60%; font-weight: bold; box-shadow: 0 0 15px #ff0000; border: none; padding: 12px; border-radius: 5px; cursor: pointer; }
 
-        .sticky-bottom-ad { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #000; border-top: 2px solid #ff0000; z-index: 1000; display: flex; align-items: center; justify-content: center; color: white; }
-
-        table { width: 100%; border-collapse: collapse; font-size: 13px; color: #00ff00; margin-top: 15px; }
-        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
-        th { background: rgba(0, 255, 0, 0.2); }
+        /* PDF Styles */
+        #pdf-content { background: #000; color: #00ff00; padding: 40px; border: 8px double #00ff00; border-radius: 10px; display: none; width: 700px; margin: auto; }
+        .stamp { border: 3px solid #ff0000; color: #ff0000; padding: 5px 15px; display: inline-block; transform: rotate(-15deg); font-weight: bold; font-size: 20px; margin-top: 20px; text-transform: uppercase; opacity: 0.8; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #00ff00; padding: 15px; text-align: left; }
+        th { color: #ff0000; font-size: 14px; background: rgba(255,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -32,39 +39,55 @@
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
 
         <div class="big-ad-unit">
-            <p style="font-size: 10px; color: #444;">ADVERTISEMENT</p>
-            <div style="color:#222;">[728x90 BANNER AD]</div>
+            <p style="color:#444;">[HEADER AD 728x90]</p>
         </div>
 
-        <input type="text" id="search" placeholder="ENTER MOBILE NUMBER...">
+        <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
         <br>
-        <button onclick="find()">START DEEP SCAN</button>
+        
+        <button class="search-btn" onclick="find()">
+            REQUEST SEARCHING FOR MUDASIR 🔍
+        </button>
         
         <div id="result-area">
             <div id="result-table"></div>
+            <button id="downloadBtn" onclick="generatePDF()">📄 DOWNLOAD STYLISH PDF REPORT</button>
             
-            <button id="downloadBtn" onclick="downloadSingleRecord()">📥 DOWNLOAD THIS RECORD (.DOC)</button>
-
             <div id="after-result-ad" style="display:none;" class="big-ad-unit">
-                 <p style="font-size: 10px; color: #444;">ADVERTISEMENT</p>
-                 <div style="color:#222;">[300x250 SQUARE AD]</div>
+                 <p style="color:#444;">[RESULT AD 300x250]</p>
             </div>
         </div>
     </div>
 
-    <div class="sticky-bottom-ad">
-        [STICKY FOOTER AD - EARN MONEY HERE]
+    <div id="pdf-wrapper" style="display: none;">
+        <div id="pdf-content">
+            <center>
+                <h1 style="color: #00ff00; margin: 0; text-decoration: underline;">MUDASIR CLOUD SYSTEM</h1>
+                <p style="color: #888;">ENCRYPTED DATABASE REPORT - PRIVATE ACCESS</p>
+            </center>
+            
+            <div id="pdf-data-body"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
+                <div style="font-size: 11px; color: #888;">
+                    <b>GENERATED BY:</b> MUDASIR SCANNER<br>
+                    <b>DATE:</b> <span id="pdf-date"></span><br>
+                    <b>ID:</b> <span id="pdf-hash"></span>
+                </div>
+                <div class="stamp">VERIFIED BY MUDASIR</div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Data contains 38 records
         const data = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
-            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
-            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
             ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
             ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
             ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad, Multan"],
             ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"]
+            // Add other records here
         ];
 
         let currentResult = null;
@@ -75,52 +98,56 @@
             let downloadBtn = document.getElementById("downloadBtn");
             let afterAd = document.getElementById("after-result-ad");
 
-            if(val === "") { alert("ENTER NUMBER!"); return; }
+            if(val === "") { alert("Please input a value."); return; }
             
-            let res = data.filter(row => row[1].includes(val));
+            let res = data.filter(row => row[1].includes(val) || row[2].includes(val));
             
             if(res.length > 0) {
-                currentResult = res[0]; // Store the found record
-                let html = `<table>
-                    <tr><th>NAME</th><td>${res[0][0]}</td></tr>
+                currentResult = res[0];
+                let html = `<table style="margin-top:20px;">
+                    <tr><th>NAME</th><td style="color:#fff; font-weight:bold;">${res[0][0]}</td></tr>
                     <tr><th>PHONE</th><td>${res[0][1]}</td></tr>
                     <tr><th>CNIC</th><td>${res[0][2]}</td></tr>
                     <tr><th>ADDRESS</th><td>${res[0][3]}</td></tr>
                 </table>`;
                 
                 resultTable.innerHTML = html;
-                downloadBtn.style.display = "block"; // Show download button
-                afterAd.style.display = "flex"; // Show ad
+                downloadBtn.style.display = "block";
+                afterAd.style.display = "flex";
             } else {
-                resultTable.innerHTML = "<p style='color:red; padding:20px;'>❌ NO RECORD IN CLOUD</p>";
+                resultTable.innerHTML = "<p style='color:red; padding:30px; border:1px dashed red; margin-top:20px;'>⚠️ RECORD NOT FOUND IN LOCAL CLOUD</p>";
                 downloadBtn.style.display = "none";
                 afterAd.style.display = "none";
-                currentResult = null;
             }
         }
 
-        // Function to download ONLY the searched record
-        function downloadSingleRecord() {
+        function generatePDF() {
             if(!currentResult) return;
-
-            let fileName = currentResult[1] + "_Detail.doc";
-            let content = `
-                MUDASIR CLOUD SCANNER - OFFICIAL REPORT
-                ---------------------------------------
-                NAME:    ${currentResult[0]}
-                PHONE:   ${currentResult[1]}
-                CNIC:    ${currentResult[2]}
-                ADDRESS: ${currentResult[3]}
-                ---------------------------------------
-                Report Generated by Mudasir Cloud System
-            `;
             
-            let blob = new Blob([content], { type: "application/msword" });
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement("a");
-            a.href = url;
-            a.download = fileName;
-            a.click();
+            document.getElementById("pdf-content").style.display = "block";
+            document.getElementById("pdf-date").innerText = new Date().toLocaleString();
+            document.getElementById("pdf-hash").innerText = "MDR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+            
+            let pdfBody = `<table>
+                <tr><th>OWNER NAME</th><td>${currentResult[0]}</td></tr>
+                <tr><th>MOBILE NUMBER</th><td>${currentResult[1]}</td></tr>
+                <tr><th>IDENTITY CARD</th><td>${currentResult[2]}</td></tr>
+                <tr><th>LOCATION DATA</th><td>${currentResult[3]}</td></tr>
+            </table>`;
+            document.getElementById("pdf-data-body").innerHTML = pdfBody;
+
+            const element = document.getElementById("pdf-content");
+            const opt = {
+                margin:       5,
+                filename:     'MUDASIR_REPORT_' + currentResult[1] + '.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 3, backgroundColor: "#000000" },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.getElementById("pdf-content").style.display = "none";
+            });
         }
     </script>
 </body>
