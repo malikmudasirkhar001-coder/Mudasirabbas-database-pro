@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUDASIR CLOUD SCANNER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; }
         .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 15px #00ff00; }
@@ -14,7 +15,10 @@
         table { width: 100%; border-collapse: collapse; font-size: 12px; color: #00ff00; }
         th, td { border: 1px solid #00ff00; padding: 10px; text-align: left; }
         th { background: rgba(0, 255, 0, 0.2); color: #fff; }
-        tr:hover { background: rgba(0, 255, 0, 0.1); }
+        .no-record { color: #ff0000; padding: 20px; border: 1px dashed #ff0000; border-radius: 10px; margin-top: 10px; }
+        .wa-btn { display: inline-block; margin-top: 15px; padding: 12px 20px; background: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; transition: 0.3s; }
+        .wa-btn:hover { background: #128C7E; box-shadow: 0 0 10px #25D366; }
+        .wa-btn i { margin-right: 8px; font-size: 22px; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -48,20 +52,32 @@
             ["Fiaz Ahmad", "03017544623", "32303-0000000-17", "Cah mola wala gnjo Tali", "Khar"],
             ["Sajad doodh", "03480636588", "32303-0000000-18", "Gurmani shirki", "Doodh wala"],
             ["Khalid Hussain", "03002530987", "32303-0000000-19", "Cah hayat khar wala", "Khar"],
-            ["Haneef khar", "03226744360", "32303-0000000-20", "Cah hayat khar wala", "Khar"]
+            ["Haneef khar", "03226744360", "32303-0000000-20", "Cah hayat khar wala", "Khar"],
+            ["Muhammad imran", "03285403961", "32303-0000000-21", "Cah hayat khar wala", "Khar"],
+            ["Sajjad Hussain", "03471841454", "32303-0000000-22", "Tonsa Sharif", "Unknown"]
         ];
 
         function find() {
             let val = document.getElementById("search").value;
             let res = data.filter(row => row[1].includes(val));
-            let html = "<table><tr><th>Name</th><th>Phone</th><th>CNIC</th><th>Caste</th><th>Loc</th></tr>";
+            let resultDiv = document.getElementById("result");
+            
             if(res.length > 0) {
+                let html = "<table><tr><th>Name</th><th>Phone</th><th>CNIC</th><th>Caste</th><th>Loc</th></tr>";
                 res.forEach(r => {
-                    html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[4]}</td><td>${r[3]}</td></tr>`;
+                    let caste = (r[4] && r[4].trim() !== "") ? r[4] : "Unknown"; 
+                    html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${caste}</td><td>${r[3]}</td></tr>`;
                 });
-                document.getElementById("result").innerHTML = html + "</table>";
+                resultDiv.innerHTML = html + "</table>";
             } else {
-                document.getElementById("result").innerHTML = "<p style='color:red;'>NO RECORD FOUND</p>";
+                resultDiv.innerHTML = `
+                    <div class="no-record">
+                        <p>⚠️ <b>ACCESS DENIED: RECORD NOT IN LOCAL CLOUD</b></p>
+                        <p>Via 500 Get Full Detail</p>
+                        <a href="https://wa.me/923084191378?text=I%20want%20details%20for%20number:%20${val}" class="wa-btn">
+                            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                        </a>
+                    </div>`;
             }
         }
     </script>
