@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUDASIR DATABASE PRO</title>
+    <style>
+        body { background: #000; color: #00ff00; font-family: monospace; text-align: center; padding: 20px; }
+        .box { border: 2px solid #00ff00; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; }
+        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; }
+        button { background: #00ff00; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #00ff00; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
+        <input type="text" id="search" placeholder="Enter Mobile Number...">
+        <button onclick="find()">SEARCH</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const data = [
+            ["SAHIL RASHEED", "03247026751", "3230300000000", "Chah Hayat Wala"],
+            ["Mubashir Sharif", "03274207754", "3230300000000", "Chah Hayat Khar"],
+            ["Basheer Ahmad", "03046754893", "3230300000000", "Gurmani Garbi"],
+            ["Salman Khan", "03343606333", "3230300000000", "Sanwan side"],
+            ["Asif Khalid", "03042016315", "03230300000009", "Cah hayat Wala"],
+            ["Bilal Khan", "03264837504", "32303000000000", "Bhatii bradri"],
+            ["Muhammad imran", "03707830348", "3230300000000", "Cah hayat khar"],
+            ["Malik mubashir", "03216207754", "3230300000000", "Cah hayat khar"],
+            ["Malik khizer", "03299473272", "32303000000000", "Cah hayat khar"],
+            ["Salman khar 2", "03211700269", "N/A", "Pathan bardri"],
+            ["Muhammad Imtiaz", "03286454952", "323030000000000", "Cah hayat khar"],
+            ["Muhammad Riaz", "03287356947", "323030000000000", "Dhalooo wala"],
+            ["Muhammad zeshan", "03426624485", "323030000000000", "Kureshan wala"],
+            ["Imran Sabir", "03006875396", "32303000000000", "Cah hayt khar"],
+            ["Imran Sabir", "03097481344", "32303000000000", "Cah hayt khar"]
+        ];
+
+        function find() {
+            let val = document.getElementById("search").value;
+            let res = data.filter(row => row[1].includes(val));
+            let html = "<table><tr><th>Name</th><th>Phone</th><th>Loc</th></tr>";
+            if(res.length > 0) {
+                res.forEach(r => html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[3]}</td></tr>`);
+                document.getElementById("result").innerHTML = html + "</table>";
+            } else {
+                document.getElementById("result").innerHTML = "<p>No Record Found</p>";
+            }
+        }
+    </script>
+</body>
+</html>
