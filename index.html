@@ -3,52 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDASIR DATABASE PRO</title>
+    <title>MUDASIR CLOUD SCANNER</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: monospace; text-align: center; padding: 20px; }
-        .box { border: 2px solid #00ff00; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; }
-        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; }
-        button { background: #00ff00; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid #00ff00; padding: 8px; text-align: left; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; }
+        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 15px #00ff00; }
+        h2 { font-size: 22px; text-shadow: 2px 2px #ff0000; }
+        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; }
+        button { background: #00ff00; color: #000; padding: 10px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 60%; margin-bottom: 20px; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; color: #00ff00; }
+        th, td { border: 1px solid #00ff00; padding: 10px; text-align: left; }
+        th { background: rgba(0, 255, 0, 0.2); color: #fff; }
+        tr:hover { background: rgba(0, 255, 0, 0.1); }
     </style>
 </head>
 <body>
     <div class="box">
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
         <input type="text" id="search" placeholder="Enter Mobile Number...">
-        <button onclick="find()">SEARCH</button>
-        <div id="result"></div>
+        <br>
+        <button onclick="find()">SEARCH DATABASE</button>
+        <div class="table-container" id="result"></div>
     </div>
 
     <script>
         const data = [
-            ["SAHIL RASHEED", "03247026751", "3230300000000", "Chah Hayat Wala"],
-            ["Mubashir Sharif", "03274207754", "3230300000000", "Chah Hayat Khar"],
-            ["Basheer Ahmad", "03046754893", "3230300000000", "Gurmani Garbi"],
-            ["Salman Khan", "03343606333", "3230300000000", "Sanwan side"],
-            ["Asif Khalid", "03042016315", "03230300000009", "Cah hayat Wala"],
-            ["Bilal Khan", "03264837504", "32303000000000", "Bhatii bradri"],
-            ["Muhammad imran", "03707830348", "3230300000000", "Cah hayat khar"],
-            ["Malik mubashir", "03216207754", "3230300000000", "Cah hayat khar"],
-            ["Malik khizer", "03299473272", "32303000000000", "Cah hayat khar"],
-            ["Salman khar 2", "03211700269", "N/A", "Pathan bardri"],
-            ["Muhammad Imtiaz", "03286454952", "323030000000000", "Cah hayat khar"],
-            ["Muhammad Riaz", "03287356947", "323030000000000", "Dhalooo wala"],
-            ["Muhammad zeshan", "03426624485", "323030000000000", "Kureshan wala"],
-            ["Imran Sabir", "03006875396", "32303000000000", "Cah hayt khar"],
-            ["Imran Sabir", "03097481344", "32303000000000", "Cah hayt khar"]
+            ["SAHIL RASHEED", "03247026751", "32303-0000000-1", "Chah Hayat Wala", "Khar"],
+            ["Mubashir Sharif", "03274207754", "32303-0000000-2", "Chah Hayat Khar", "Khar"],
+            ["Basheer Ahmad", "03046754893", "32303-0000000-3", "Gurmani Garbi", "Gurmani"],
+            ["Salman Khan", "03343606333", "32303-0000000-4", "Sanwan side", "Pathan"],
+            ["Asif Khalid", "03042016315", "32303-0000000-5", "Cah hayat Wala", "Khar"],
+            ["Bilal Khan", "03264837504", "32303-0000000-6", "Bhatii bradri", "Bhatti"],
+            ["Muhammad imran", "03707830348", "32303-0000000-7", "Chah hayat khar", "Khar"],
+            ["Malik mubashir", "03216207754", "32303-0000000-8", "Chah hayat khar", "Khar"],
+            ["Malik khizer", "03299473272", "32303-0000000-9", "Chah hayat khar", "Khar"],
+            ["Salman khar 2", "03211700269", "N/A", "Pathan bardri", "Khar"],
+            ["Muhammad Imtiaz", "03286454952", "32303-0000000-10", "Chah hayat khar", "Khar"],
+            ["Muhammad Riaz", "03287356947", "32303-0000000-11", "Dhalooo wala", "Khar"],
+            ["Muhammad zeshan", "03426624485", "32303-0000000-12", "Kureshan wala", "Kureshi"],
+            ["Imran Sabir", "03006875396", "32303-0000000-13", "Chah hayt khar", "Khar"],
+            ["Imran Sabir", "03097481344", "32303-0000000-14", "Chah hayt khar", "Khar"],
+            ["Yaseen lashari", "03017871854", "32303-0000000-15", "Jewan wali puli se agy", "Lashari"],
+            ["Imtiaz ubha", "03025100776", "32303-0000000-16", "Chah hayat Wala", "Khar"],
+            ["Fiaz Ahmad", "03017544623", "32303-0000000-17", "Cah mola wala gnjo Tali", "Khar"],
+            ["Sajad doodh", "03480636588", "32303-0000000-18", "Gurmani shirki", "Doodh wala"],
+            ["Khalid Hussain", "03002530987", "32303-0000000-19", "Cah hayat khar wala", "Khar"],
+            ["Haneef khar", "03226744360", "32303-0000000-20", "Cah hayat khar wala", "Khar"]
         ];
 
         function find() {
             let val = document.getElementById("search").value;
             let res = data.filter(row => row[1].includes(val));
-            let html = "<table><tr><th>Name</th><th>Phone</th><th>Loc</th></tr>";
+            let html = "<table><tr><th>Name</th><th>Phone</th><th>CNIC</th><th>Caste</th><th>Loc</th></tr>";
             if(res.length > 0) {
-                res.forEach(r => html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[3]}</td></tr>`);
+                res.forEach(r => {
+                    html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[4]}</td><td>${r[3]}</td></tr>`;
+                });
                 document.getElementById("result").innerHTML = html + "</table>";
             } else {
-                document.getElementById("result").innerHTML = "<p>No Record Found</p>";
+                document.getElementById("result").innerHTML = "<p style='color:red;'>NO RECORD FOUND</p>";
             }
         }
     </script>
