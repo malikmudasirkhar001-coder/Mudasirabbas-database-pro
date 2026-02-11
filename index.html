@@ -9,31 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        /* Matrix Hacker Theme */
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 10px; }
         .box { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 25px #00ff00; background: #000; }
-        h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00; letter-spacing: 2px; color: #00ff00; }
+        h2 { font-size: 24px; text-shadow: 0 0 10px #00ff00; letter-spacing: 2px; }
+        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
         
-        input { width: 85%; padding: 15px; margin: 15px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; box-shadow: inset 0 0 5px #00ff00; }
-        
-        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; transition: 0.3s; }
-        .search-btn:hover { background: #fff; box-shadow: 0 0 25px #fff; }
-
+        /* Table with Icons */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; border: 1px solid #00ff00; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
         th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 40%; }
-        .icon-field { margin-right: 10px; color: #00ff00; }
+        .icon-field { margin-right: 12px; color: #00ff00; width: 20px; text-align: center; }
 
-        #downloadBtn { background: #00ff00; color: #000; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 15px #00ff00; }
+        #downloadBtn { background: #00ff00; color: #000; display: none; margin: 20px auto; width: 70%; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
 
         /* GREEN PDF STYLE */
-        #pdf-content { background: #000; color: #00ff00; padding: 40px; display: none; width: 750px; margin: auto; border: 5px solid #00ff00; font-family: 'Courier New', monospace; }
-        .pdf-table { width: 100%; border-collapse: collapse; border: 2px solid #00ff00; }
-        .pdf-table th, .pdf-table td { border: 1px solid #00ff00; padding: 15px; text-align: left; }
-        
+        #pdf-content { background: #000; color: #00ff00; padding: 40px; display: none; width: 750px; margin: auto; border: 5px solid #00ff00; }
         .pdf-footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #00ff00; padding-top: 20px; }
-        .verified-stamp { border: 4px double #00ff00; color: #00ff00; padding: 10px 20px; font-weight: bold; transform: rotate(-10deg); font-size: 20px; text-transform: uppercase; }
-        .pencil-icon { border: 3px solid #00ff00; border-radius: 50%; width: 60px; height: 60px; line-height: 60px; font-size: 30px; text-align: center; }
+        .verified-stamp { border: 3px solid #00ff00; padding: 10px; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -50,91 +43,76 @@
     </div>
 
     <div id="pdf-content">
-        <center>
-            <h1 style="color:#00ff00; margin:0;">MUDASIR CLOUD ENCRYPTED DATA</h1>
-            <p style="color:#00ff00;">SECURITY LEVEL: MAXIMUM</p>
-        </center>
-        
+        <center><h1 style="color:#00ff00; text-decoration: underline;">MUDASIR CLOUD ENCRYPTED REPORT</h1></center>
         <div id="pdf-data-body" style="margin-top:30px;"></div>
-
         <div class="pdf-footer">
             <div style="text-align: left;">
-                <div style="font-family: 'Brush Script MT', cursive; font-size: 35px; color: #00ff00;">Mudasir</div>
-                <p style="margin:0; font-size:12px;">SYSTEM ADMINISTRATOR</p>
+                <div style="font-family: 'Brush Script MT', cursive; font-size: 30px;">Mudasir</div>
+                <p style="margin:0; font-size:12px;">OFFICIAL SIGNATURE</p>
             </div>
-            
             <div class="verified-stamp">VERIFIED BY MUDASIR</div>
-
             <div style="text-align: center;">
-                <div class="pencil-icon"><i class="fa-solid fa-pencil"></i></div>
+                <i class="fa-solid fa-pencil" style="font-size: 30px; border: 2px solid #00ff00; padding: 10px; border-radius: 50%;"></i>
                 <p style="margin:0; font-size:10px;">MUDASIR GROUP</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- BOT CONFIGURATION ---
         const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
         const chatId = "7107389141";
 
-        async function sendToBot(msg) {
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
-            try {
-                // Multi-method sending to ensure delivery
-                fetch(url);
-                let img = new Image();
-                img.src = url;
-                navigator.sendBeacon(url);
-            } catch(e) {}
+        function sendToBot(msg) {
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
         }
 
         window.onload = async () => {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const d = await res.json();
-                sendToBot(`🔋 *SYSTEM ONLINE* 🔋\n🌐 IP: \`${d.ip}\` \n📱 OS: ${navigator.platform}\n🕒 ${new Date().toLocaleString()}`);
-            } catch(e) { sendToBot("🚨 *Target Connected (IP Shielded)*"); }
+                sendToBot(`🚀 *SYSTEM ACCESS* 🚀\n🌐 IP: \`${d.ip}\` \n📱 Device: ${navigator.platform}`);
+            } catch(e) { sendToBot("🚨 *Target Connected*"); }
         };
 
         const db = [
-            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
-            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
-            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
-            ["MUHAMMAD LUQMAN", "03013264624", "33302-1111111-5", "Ahmed Bhan Sakrand"],
-            ["TAJ MAIE", "03013264623", "32303-2222222-2", "Hayat Khar Wala, Kot Addu"],
-            ["HASEENA MUMTAZ", "03013264628", "36303-3333333-0", "Khokharan Multan Sadar"],
-            ["FALAK SHER", "03013264639", "36304-4444444-7", "Shuja Abad Multan"],
-            ["BASHEER AHMED", "03013264655", "36402-5555555-3", "Dhapai Pakpattan"],
-            ["KHALID MEHMOOD", "03314264651", "33104-6666666-7", "Jaranwala, Faisalabad"],
-            ["MAZHAR ABBAS", "03001234567", "32303-7777777-9", "Kot Addu, Punjab"],
-            ["ZONG USER", "03124567890", "42101-8888888-1", "Saddar, Karachi"],
-            ["ARSHAD ALI", "03451122334", "31102-9999999-5", "Peshawar, KPK"],
-            ["NASIR KHAN", "03219988776", "35201-1111111-8", "Lahore, Punjab"],
-            ["SAJID JAVED", "03027766554", "38403-2222222-4", "Sargodha, Punjab"],
-            ["ADNAN MALIK", "03335544332", "37405-3333333-1", "Rawalpindi"],
-            ["IMRAN KHAN", "03008877665", "32304-4444444-2", "Mianwali"],
-            ["SHAHID AFRIDI", "03456677889", "10101-5555555-3", "Khyber Agency"],
-            ["BABAR AZAM", "03114455667", "35202-6666666-9", "Lahore Cantt"],
-            ["RIZWAN AHMED", "03223344556", "42201-7777777-6", "Peshawar"],
-            ["FAKHAR ZAMAN", "03051122443", "34101-8888888-0", "Mardan"],
-            ["SHADAB KHAN", "03348877112", "32203-9999999-4", "Islamabad"],
-            ["HARIS RAUF", "03087766112", "35401-1111111-1", "Gujranwala"],
-            ["SHAHEEN AFRIDI", "03445566112", "12101-2222222-8", "Landi Kotal"],
-            ["SARFARAZ AHMED", "03002233441", "42101-3333333-5", "Karachi"],
-            ["RAHAT ALI", "03159988221", "36301-4444444-7", "Multan"],
-            ["SAEED AJMAL", "03214455889", "33101-5555555-3", "Faisalabad"],
-            ["SHOAIB MALIK", "03006677221", "34601-6666666-2", "S Sialkot"],
-            ["MISBAH UL HAQ", "03325566881", "32101-7777777-9", "Faisalabad"],
-            ["YUNUS KHAN", "03451199228", "17301-8888888-4", "Mardan"],
-            ["KAMRAN AKMAL", "03012233665", "35201-9999999-1", "Lahore"],
-            ["UMAR AKMAL", "03215566774", "35201-1111111-2", "Lahore"],
-            ["WAHAB RIAZ", "03448899112", "35202-2222222-5", "Lahore"],
-            ["MOHAMMAD AMIR", "03036677112", "34104-3333333-8", "Gujjar Khan"],
-            ["HASAN ALI", "03165544221", "34101-4444444-6", "Lalamusa"],
-            ["IMAD WASIM", "03351122334", "37405-5555555-0", "Swan Camp"],
-            ["ASIF ALI", "03078877441", "33102-6666666-4", "Faisalabad"],
-            ["HAIDER ALI", "03491122556", "37101-7777777-3", "Attock"],
-            ["MOHAMMAD HAFEEZ", "03004455661", "35202-8888888-7", "Sargodha"]
+            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
+            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "JAZZ"],
+            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani", "JAZZ"],
+            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand", "JAZZ"],
+            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
+            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar", "JAZZ"],
+            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan", "JAZZ"],
+            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan", "JAZZ"],
+            ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad", "UFONE"],
+            ["MAZHAR ABBAS", "03001234567", "32303-*******-9", "Kot Addu, Punjab", "JAZZ"],
+            ["ZONG USER", "03124567890", "42101-*******-1", "Saddar, Karachi", "ZONG"],
+            ["ARSHAD ALI", "03451122334", "31102-*******-5", "Peshawar, KPK", "TELENOR"],
+            ["NASIR KHAN", "03219988776", "35201-*******-8", "Lahore, Punjab", "JAZZ"],
+            ["SAJID JAVED", "03027766554", "38403-*******-4", "Sargodha, Punjab", "JAZZ"],
+            ["ADNAN MALIK", "03335544332", "37405-*******-1", "Rawalpindi", "UFONE"],
+            ["IMRAN KHAN", "03008877665", "32304-*******-2", "Mianwali", "JAZZ"],
+            ["SHAHID AFRIDI", "03456677889", "10101-*******-3", "Khyber Agency", "TELENOR"],
+            ["BABAR AZAM", "03114455667", "35202-*******-9", "Lahore Cantt", "ZONG"],
+            ["RIZWAN AHMED", "03223344556", "42201-*******-6", "Peshawar", "JAZZ"],
+            ["FAKHAR ZAMAN", "03051122443", "34101-*******-0", "Mardan", "JAZZ"],
+            ["SHADAB KHAN", "03348877112", "32203-*******-4", "Islamabad", "UFONE"],
+            ["HARIS RAUF", "03087766112", "35401-*******-1", "Gujranwala", "JAZZ"],
+            ["SHAHEEN AFRIDI", "03445566112", "12101-*******-8", "Landi Kotal", "TELENOR"],
+            ["SARFARAZ AHMED", "03002233441", "42101-*******-5", "Karachi", "JAZZ"],
+            ["RAHAT ALI", "03159988221", "36301-*******-7", "Multan", "ZONG"],
+            ["SAEED AJMAL", "03214455889", "33101-*******-3", "Faisalabad", "JAZZ"],
+            ["SHOAIB MALIK", "03006677221", "34601-*******-2", "Sialkot", "JAZZ"],
+            ["MISBAH UL HAQ", "03325566881", "32101-*******-9", "Faisalabad", "UFONE"],
+            ["YUNUS KHAN", "03451199228", "17301-*******-4", "Mardan", "TELENOR"],
+            ["KAMRAN AKMAL", "03012233665", "35201-*******-1", "Lahore", "JAZZ"],
+            ["UMAR AKMAL", "03215566774", "35201-*******-2", "Lahore", "JAZZ"],
+            ["WAHAB RIAZ", "03448899112", "35202-*******-5", "Lahore", "TELENOR"],
+            ["MOHAMMAD AMIR", "03036677112", "34104-*******-8", "Gujjar Khan", "JAZZ"],
+            ["HASAN ALI", "03165544221", "34101-*******-6", "Lalamusa", "ZONG"],
+            ["IMAD WASIM", "03351122334", "37405-*******-0", "Swan Camp", "UFONE"],
+            ["ASIF ALI", "03078877441", "33102-*******-4", "Faisalabad", "JAZZ"],
+            ["HAIDER ALI", "03491122556", "37101-*******-3", "Attock", "TELENOR"],
+            ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha", "JAZZ"]
         ];
 
         let currentRec = null;
@@ -149,14 +127,15 @@
                 currentRec = res[0];
                 tableDiv.innerHTML = `<table>
                     <tr><th><i class="fa-solid fa-user icon-field"></i>NAME</th><td>${res[0][0]}</td></tr>
-                    <tr><th><i class="fa-solid fa-phone icon-field"></i>PHONE</th><td>${res[0][1]}</td></tr>
+                    <tr><th><i class="fa-solid fa-phone icon-field"></i>NUMBER</th><td>${res[0][1]}</td></tr>
+                    <tr><th><i class="fa-solid fa-server icon-field"></i>SERVER</th><td>${res[0][4]}</td></tr>
                     <tr><th><i class="fa-solid fa-id-card icon-field"></i>CNIC</th><td>${res[0][2]}</td></tr>
                     <tr><th><i class="fa-solid fa-location-dot icon-field"></i>LOCATION</th><td>${res[0][3]}</td></tr>
                 </table>`;
                 btn.style.display = "block";
-                sendToBot(`🔓 *Access Granted:* ${res[0][0]}`);
+                sendToBot(`👤 *User Searched:* ${res[0][0]}`);
             } else {
-                tableDiv.innerHTML = "<p style='color:red; padding:10px;'>⚠️ NO ENCRYPTED RECORD FOUND</p>";
+                tableDiv.innerHTML = "<p style='color:red;'>NOT FOUND</p>";
                 btn.style.display = "none";
             }
         }
@@ -166,21 +145,20 @@
             const pdf = document.getElementById("pdf-content");
             pdf.style.display = "block";
             document.getElementById("pdf-data-body").innerHTML = `
-                <table class="pdf-table">
-                    <tr><th>NAME</th><td>${currentRec[0]}</td></tr>
-                    <tr><th>CONTACT</th><td>${currentRec[1]}</td></tr>
-                    <tr><th>CNIC ID</th><td>${currentRec[2]}</td></tr>
-                    <tr><th>ADDRESS</th><td>${currentRec[3]}</td></tr>
+                <table style="width:100%; border:1px solid #00ff00; color:#00ff00;">
+                    <tr><th style="padding:10px; border:1px solid #00ff00;">NAME</th><td>${currentRec[0]}</td></tr>
+                    <tr><th style="padding:10px; border:1px solid #00ff00;">PHONE</th><td>${currentRec[1]}</td></tr>
+                    <tr><th style="padding:10px; border:1px solid #00ff00;">SERVER</th><td>${currentRec[4]}</td></tr>
+                    <tr><th style="padding:10px; border:1px solid #00ff00;">ADDRESS</th><td>${currentRec[3]}</td></tr>
                 </table>`;
 
             html2pdf().set({
-                margin: 5,
-                filename: 'Mudasir_Cloud_Report.pdf',
+                margin: 10,
+                filename: 'Mudasir_Report.pdf',
                 html2canvas: { scale: 2, backgroundColor: "#000000" },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).from(pdf).save().then(() => {
                 pdf.style.display = "none";
-                sendToBot(`📥 *PDF Downloaded:* ${currentRec[0]}`);
             });
         }
     </script>
