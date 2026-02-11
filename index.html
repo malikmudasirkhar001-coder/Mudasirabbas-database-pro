@@ -3,73 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDASIR CLOUD SCANNER</title>
+    <title>MUDASIR CLOUD SCANNER - PRO</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; }
-        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; margin-bottom: 100px; }
+        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; position: relative; }
         h2 { font-size: 24px; text-shadow: 2px 2px #ff0000; letter-spacing: 2px; }
         
-        /* Ad Styles */
-        .header-ad {
-            margin: 20px auto;
-            max-width: 728px;
-            min-height: 90px;
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px dashed #00ff00;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 10px;
-            border-radius: 10px;
-        }
+        /* Big Header Ad */
+        .big-ad-unit { width: 100%; min-height: 250px; background: #111; border: 1px solid #333; margin: 15px 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 
-        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; outline: none; }
-        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin-bottom: 20px; text-transform: uppercase; }
-        button:hover { background: #00cc00; box-shadow: 0 0 10px #00ff00; }
+        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; }
+        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin: 10px 0; text-transform: uppercase; }
+        
+        /* Export Button */
+        .export-btn { background: #ff0000; color: #fff; width: 40%; font-size: 12px; margin-top: 10px; }
+
+        /* Floating Bottom Ad */
+        .sticky-bottom-ad { position: fixed; bottom: 0; left: 0; width: 100%; height: 90px; background: rgba(0,0,0,0.9); border-top: 2px solid #00ff00; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+
         .table-container { overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; color: #00ff00; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
-        th { background: rgba(0, 255, 0, 0.2); color: #fff; text-transform: uppercase; }
-        .wa-btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; }
+        th { background: rgba(0, 255, 0, 0.2); }
     </style>
 </head>
 <body>
 
     <div class="box">
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
-        
-        <div class="header-ad">
-            <div>
-                <p>ADVERTISEMENT</p>
-                </div>
+
+        <div class="big-ad-unit">
+            <div id="top-ad-placeholder">
+                <p style="color:#555;">[BIG BANNER AD 336x280]</p>
+            </div>
         </div>
-        <p style="font-size: 11px; color: #888;">ENCRYPTED DATABASE CONNECTION: ONLINE</p>
+
         <input type="text" id="search" placeholder="ENTER MOBILE NUMBER...">
         <br>
         <button onclick="find()">START DEEP SCAN</button>
-        <div class="table-container" id="result"></div>
+        
+        <br>
+        <button class="export-btn" onclick="downloadData()">📥 DOWNLOAD FULL DATABASE (.TXT)</button>
+
+        <div id="result-area">
+            <div class="table-container" id="result"></div>
+            
+            <div id="after-result-ad" style="display:none;" class="big-ad-unit">
+                <p style="color:#555;">[RESULT SUCCESS AD - 300x250]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-bottom-ad">
+        <p style="color:#00ff00; font-size:10px; margin-right:10px;">SPONSORED:</p>
+        <div style="color:#555;">[STICKY FOOTER BANNER]</div>
     </div>
 
     <script>
+        // Database Array
         const data = [
-            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "Khar", ""],
-            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "Khar", ""],
-            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani", "Gurmani", ""],
-            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand, Shaheed Benazir Abad", "Unknown", ""],
-            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Gar Mani Gharbi, Kot Addu", "Khar", ""],
-            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar, Multan", "Khokhar", ""],
-            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Bhatti Wala Beroon Multani, Multan", "Bhatti", ""],
-            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan Chak 5 5 S P, Pakpattan", "Unknown", ""]
-            // Mazeed data yahan add hota rahega...
+            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar"],
+            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar"],
+            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani"],
+            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand"],
+            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu"],
+            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad, Multan"],
+            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan"]
         ];
 
         function find() {
             let val = document.getElementById("search").value.trim();
-            if(val === "") { alert("ENTER NUMBER FIRST!"); return; }
+            if(val === "") { alert("ENTER NUMBER!"); return; }
             
             let res = data.filter(row => row[1].includes(val) || row[0].toLowerCase().includes(val.toLowerCase()));
             let resultDiv = document.getElementById("result");
+            let afterAd = document.getElementById("after-result-ad");
             
             if(res.length > 0) {
                 let html = "<table><tr><th>NAME</th><th>PHONE</th><th>CNIC</th><th>ADDRESS</th></tr>";
@@ -77,13 +85,26 @@
                     html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`;
                 });
                 resultDiv.innerHTML = html + "</table>";
+                afterAd.style.display = "flex"; // Show ad after results
             } else {
-                resultDiv.innerHTML = `
-                    <div style="color:red; padding:20px; border:1px dashed red; margin-top:15px;">
-                        <p>❌ <b>DATA NOT FOUND</b></p>
-                        <a href="https://wa.me/923084191378?text=Need%20Details%20for:%20${val}" class="wa-btn">CONTACT ADMIN</a>
-                    </div>`;
+                resultDiv.innerHTML = "<p style='color:red;'>NO RECORD FOUND</p>";
+                afterAd.style.display = "none";
             }
+        }
+
+        // Feature: Download Data as File
+        function downloadData() {
+            let content = "MUDASIR CLOUD SCANNER - FULL DATABASE\n\n";
+            data.forEach(r => {
+                content += `Name: ${r[0]} | Phone: ${r[1]} | CNIC: ${r[2]} | Addr: ${r[3]}\n`;
+            });
+            
+            let blob = new Blob([content], { type: "text/plain" });
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "sim_database_records.txt";
+            a.click();
         }
     </script>
 </body>
