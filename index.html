@@ -6,74 +6,82 @@
     <title>MUDASIR CLOUD SCANNER</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 15px; }
-        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 800px; margin: auto; box-shadow: 0 0 15px #00ff00; }
-        h2 { font-size: 22px; text-shadow: 2px 2px #ff0000; }
-        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; }
-        button { background: #00ff00; color: #000; padding: 10px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 60%; margin-bottom: 20px; }
-        .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; color: #00ff00; }
-        th, td { border: 1px solid #00ff00; padding: 10px; text-align: left; }
-        th { background: rgba(0, 255, 0, 0.2); color: #fff; }
-        .map-link { display: inline-block; margin-top: 5px; color: #ffffff; background: #ff0000; text-decoration: none; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
-        .no-record { color: #ff0000; padding: 20px; border: 1px dashed #ff0000; border-radius: 10px; margin-top: 10px; }
-        .wa-btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; box-shadow: 0 0 10px #25D366; }
+        .box { border: 2px solid #00ff00; padding: 15px; border-radius: 15px; max-width: 900px; margin: auto; box-shadow: 0 0 15px #00ff00; }
+        h2 { font-size: 24px; text-shadow: 2px 2px #ff0000; letter-spacing: 2px; }
+        
+        /* Ad Styles */
+        .header-ad {
+            margin: 20px auto;
+            max-width: 728px;
+            min-height: 90px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px dashed #00ff00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 10px;
+            border-radius: 10px;
+        }
+
+        input { width: 80%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #00ff00; border-radius: 5px; text-align: center; font-weight: bold; outline: none; }
+        button { background: #00ff00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 65%; margin-bottom: 20px; text-transform: uppercase; }
+        button:hover { background: #00cc00; box-shadow: 0 0 10px #00ff00; }
+        .table-container { overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; color: #00ff00; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
+        th { background: rgba(0, 255, 0, 0.2); color: #fff; text-transform: uppercase; }
+        .wa-btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; }
     </style>
 </head>
 <body>
+
     <div class="box">
         <h2>MUDASIR CLOUD SCANNER 🛰️</h2>
-        <input type="text" id="search" placeholder="Enter Mobile Number...">
+        
+        <div class="header-ad">
+            <div>
+                <p>ADVERTISEMENT</p>
+                </div>
+        </div>
+        <p style="font-size: 11px; color: #888;">ENCRYPTED DATABASE CONNECTION: ONLINE</p>
+        <input type="text" id="search" placeholder="ENTER MOBILE NUMBER...">
         <br>
-        <button onclick="find()">SEARCH DATABASE</button>
+        <button onclick="find()">START DEEP SCAN</button>
         <div class="table-container" id="result"></div>
     </div>
 
     <script>
         const data = [
-            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala", "Khar", "https://maps.app.goo.gl/ESLAJ9uypodCYEUS6"],
-            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar", "Khar", "https://maps.app.goo.gl/tsLSEbteLdFbpPXS6"],
-            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi", "Gurmani", ""],
-            ["Salman Khan", "03343606333", "32303-0000004", "Sanwan side", "Pathan", "https://maps.app.goo.gl/D5nnq9EtuiiQceVZ9"],
-            ["Asif Khalid", "03042016315", "32303-0000005", "Cah hayat Wala", "Khar", "https://maps.app.goo.gl/cxosmm1Pte9Lmahk8"],
-            ["Bilal Khan", "03264837504", "32303-0000006", "Bhatii bradri", "Bhatti", "https://maps.app.goo.gl/osSAZWhJe38NzVHDA"],
-            ["Muhammad imran", "03707830348", "32303-0000007", "Chah hayat khar", "Khar", "https://maps.app.goo.gl/7xQyUwqHE4Y8kvsd8"],
-            ["Khalid Hussain", "03002530987", "32303-0000008", "Cah hayat khar wala", "Khar", "https://maps.app.goo.gl/DXTmeBRKi3MqTjYx6"],
-            ["Sajjad Hussain", "03471841454", "32303-0000009", "Tonsa Sharif", "Unknown", "https://maps.app.goo.gl/cxqKAaaNRQB9g2Bi8"],
-            ["Waseem bhatti", "03287330445", "32303-0000010", "Jewan wali puli", "Bhatti", "https://maps.app.goo.gl/vcqr9SJaD2NmFop2A"],
-            ["Naveed khar", "03294951082", "32303-0000011", "Cah hayat khar wala ubha kho", "Khar", "https://maps.app.goo.gl/fxpFQD7GJfBVTE2g6"],
-            ["Nadeem gurmani", "03037362163", "32303-0000012", "Gurmani wasti", "Gurmani", "https://maps.app.goo.gl/jWGMaU7tFRNHeKvk7"],
-            ["Nadir korai", "03269334215", "32303-0000013", "Korai wasti bairage chadiya", "Korai", "https://maps.app.goo.gl/DG8AbpDN8LTH3zEK9"],
-            ["Mogees Sahab", "03487048316", "32303-0000014", "Walo wAla khar", "Khar", "https://maps.app.goo.gl/SyHo1oSuHjViEYqb7"],
-            ["Shazaib Khan", "03285403952", "32303-0000015", "Gurmani garbi kho sohry wla", "Kolachi", "https://maps.app.goo.gl/8tWogFp5sWTPhoibA"]
+            ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "Khar", ""],
+            ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "Khar", ""],
+            ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani", "Gurmani", ""],
+            ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand, Shaheed Benazir Abad", "Unknown", ""],
+            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Gar Mani Gharbi, Kot Addu", "Khar", ""],
+            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar, Multan", "Khokhar", ""],
+            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Bhatti Wala Beroon Multani, Multan", "Bhatti", ""],
+            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan Chak 5 5 S P, Pakpattan", "Unknown", ""]
+            // Mazeed data yahan add hota rahega...
         ];
 
         function find() {
-            let val = document.getElementById("search").value;
-            let res = data.filter(row => row[1].includes(val));
+            let val = document.getElementById("search").value.trim();
+            if(val === "") { alert("ENTER NUMBER FIRST!"); return; }
+            
+            let res = data.filter(row => row[1].includes(val) || row[0].toLowerCase().includes(val.toLowerCase()));
             let resultDiv = document.getElementById("result");
             
             if(res.length > 0) {
-                let html = "<table><tr><th>Name</th><th>Phone</th><th>Caste</th><th>Location</th></tr>";
+                let html = "<table><tr><th>NAME</th><th>PHONE</th><th>CNIC</th><th>ADDRESS</th></tr>";
                 res.forEach(r => {
-                    let caste = (r[4] && r[4].trim() !== "") ? r[4] : "Unknown";
-                    let mapButton = (r[5] && r[5].length > 5) ? `<br><a href="${r[5]}" target="_blank" class="map-link">See on Map</a>` : "";
-                    
-                    html += `<tr>
-                        <td>${r[0]}</td>
-                        <td>${r[1]}</td>
-                        <td>${caste}</td>
-                        <td>${r[3]} ${mapButton}</td>
-                    </tr>`;
+                    html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`;
                 });
                 resultDiv.innerHTML = html + "</table>";
             } else {
                 resultDiv.innerHTML = `
-                    <div class="no-record">
-                        <p>⚠️ <b>ACCESS DENIED: RECORD NOT IN LOCAL CLOUD</b></p>
-                        <p>Via 500 Get Full Detail</p>
-                        <a href="https://wa.me/923084191378?text=I%20want%20details%20for%20number:%20${val}" class="wa-btn">
-                            🟢 Contact Admin on WhatsApp
-                        </a>
+                    <div style="color:red; padding:20px; border:1px dashed red; margin-top:15px;">
+                        <p>❌ <b>DATA NOT FOUND</b></p>
+                        <a href="https://wa.me/923084191378?text=Need%20Details%20for:%20${val}" class="wa-btn">CONTACT ADMIN</a>
                     </div>`;
             }
         }
