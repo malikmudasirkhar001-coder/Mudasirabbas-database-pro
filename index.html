@@ -30,14 +30,33 @@
         
         .signature-area { margin-top: 30px; font-family: 'Orbitron', sans-serif; font-size: 13px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px; }
         .verified { color: #00bcff; }
+
+        /* Expiry Overlay */
+        #expiry-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black; color: red;
+            z-index: 9999; flex-direction: column;
+            justify-content: center; align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
     </style>
 </head>
-<body>
+<body id="main-body">
+
+<div id="expiry-screen">
+    <i class="fas fa-exclamation-triangle" style="font-size: 80px; margin-bottom: 20px;"></i>
+    <h1>SESSION EXPIRED</h1>
+    <p>Your 10-minute access has ended.</p>
+    <p style="font-size: 12px; color: #555;">Please contact Admin Mudasir for re-activation.</p>
+</div>
 
 <div class="header">🛰️ MUDASIR CLOUD SCANNER V4.0 🛰️</div>
 
-<div class="container">
+<div class="container" id="app-content">
     <div class="box">
+        <h2 id="timer-display" style="font-size: 14px; color: #ff3333;">TIMER: 10:00</h2>
         <h2><i class="fas fa-satellite"></i> SYSTEM DECRYPTOR</h2>
         <input type="text" id="search-input" placeholder="ENTER NUMBER OR CNIC...">
         <button class="btn search-btn" onclick="processSearch()">DECRYPT DATA</button>
@@ -72,6 +91,30 @@
 
     let current = null;
 
+    // --- EXPIRY LOGIC START ---
+    const SESSION_TIME = 10 * 60; // 10 minutes in seconds
+    let timeLeft = SESSION_TIME;
+
+    function startTimer() {
+        const timerLabel = document.getElementById("timer-display");
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            
+            timerLabel.innerText = `TIMER: ${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.getElementById("expiry-screen").style.display = "flex";
+                document.getElementById("app-content").style.display = "none";
+            }
+            timeLeft--;
+        }, 1000);
+    }
+    window.onload = startTimer;
+    // --- EXPIRY LOGIC END ---
+
     function processSearch() {
         const val = document.getElementById("search-input").value.trim();
         const area = document.getElementById("result-area");
@@ -89,7 +132,6 @@
                 <tr><th>LOCATION</th><td>${res[3]}</td></tr>
             </table>`;
             
-            // Set Dynamic Map Button Style and Text
             if(res[0] === "RIAZ KHAN") {
                 mapBtn.className = "btn map-btn-red";
             } else {
@@ -127,19 +169,15 @@
         if(!current) return;
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-
         doc.setFillColor(0, 0, 0); 
         doc.rect(0, 0, 210, 40, 'F'); 
-        
         doc.setTextColor(0, 255, 0); 
         doc.setFontSize(22);
         doc.setFont("courier", "bold");
         doc.text("MUDASIR CLOUD DATA SLIP", 40, 25);
-        
         doc.setDrawColor(0, 255, 0);
         doc.setLineWidth(1);
         doc.rect(10, 10, 190, 130);
-
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(14);
         doc.text("------------------------------------------", 20, 50);
@@ -149,15 +187,6 @@
         doc.text(`CNIC NO:       ${current[2]}`, 20, 85);
         doc.text(`ADDRESS:       ${current[3]}`, 20, 95);
         doc.text("------------------------------------------", 20, 105);
-
-        doc.setFontSize(12);
-        doc.setTextColor(0, 150, 255); 
-        doc.text("STATUS: [ VERIFIED BY CLOUD SYSTEM ]", 20, 115);
-        
-        doc.setTextColor(0, 200, 0);
-        doc.setFont("courier", "italic");
-        doc.text("Signature: MUDASIR _/\\_ [Admin]", 120, 125);
-
         doc.save(`Record_${current[1]}.pdf`);
     }
 </script>
