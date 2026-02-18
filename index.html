@@ -9,66 +9,79 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500&display=swap');
         
-        body { background: #000; color: #00ff00; font-family: 'Rajdhani', sans-serif; text-align: center; margin: 0; }
+        body { background: #000; color: #00ff00; font-family: 'Rajdhani', sans-serif; text-align: center; margin: 0; overflow-x: hidden; }
+        
+        /* Security Login Screen */
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        .login-box { border: 2px solid #00ff00; padding: 40px; border-radius: 20px; box-shadow: 0 0 25px #00ff00; background: rgba(0,20,0,0.9); }
+        .login-box h2 { font-family: 'Orbitron'; color: #00ff00; margin-bottom: 20px; letter-spacing: 2px; }
+
+        /* App Content */
+        #app-content { display: none; }
         .header { background: #00ff00; color: #000; padding: 15px; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px #00ff00; }
         
-        /* Prominent Timer Styling */
         .timer-container {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid #ff0000;
-            display: inline-block;
-            padding: 10px 25px;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            background: rgba(255, 0, 0, 0.1); border: 2px solid #ff0000;
+            display: inline-block; padding: 10px 25px; margin: 20px 0;
+            border-radius: 10px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
         }
-        #timer-display {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            color: #ff3333;
-            text-shadow: 0 0 8px #ff0000;
-        }
+        #timer-display { font-family: 'Orbitron', sans-serif; font-size: 30px; color: #ff3333; text-shadow: 0 0 10px #ff0000; }
 
-        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 20px; max-width: 650px; margin: 10px auto; background: rgba(0,20,0,0.95); box-shadow: 0 0 30px rgba(0,255,0,0.3); }
-        input { width: 85%; padding: 15px; margin: 15px 0; background: #000; border: 2px solid #00ff00; color: #00ff00; border-radius: 10px; font-size: 20px; text-align: center; outline: none; }
-        .btn { padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-family: 'Orbitron', sans-serif; transition: 0.3s; margin: 5px; text-transform: uppercase; display: inline-block; text-decoration: none; }
-        .search-btn { background: #00ff00; color: #000; width: 85%; font-size: 18px; margin-bottom: 20px; }
-        .map-btn { background: #4285F4; color: white; font-size: 14px; }
-        .map-btn-red { background: #ff0000; color: white; font-size: 14px; }
-        .pdf-btn { background: #ff4444; color: white; font-size: 14px; }
+        .box { border: 2px solid #00ff00; padding: 25px; border-radius: 20px; max-width: 650px; margin: 10px auto; background: rgba(0,25,0,0.95); box-shadow: 0 0 30px rgba(0,255,0,0.2); }
+        input { width: 85%; padding: 15px; margin: 15px 0; background: #000; border: 2px solid #00ff00; color: #00ff00; border-radius: 10px; font-size: 20px; text-align: center; outline: none; font-family: 'Orbitron'; }
         
+        .btn { padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; transition: 0.3s; margin: 5px; text-transform: uppercase; outline: none; }
+        .search-btn { background: #00ff00; color: #000; width: 85%; font-size: 18px; }
+        .search-btn:hover { background: #00cc00; transform: scale(1.02); }
+        
+        .map-btn { background: #4285F4; color: white; font-size: 14px; }
+        .map-btn-red { background: #ff0000; color: white; font-size: 14px; box-shadow: 0 0 15px #ff0000; }
+        .pdf-btn { background: #ff4444; color: white; font-size: 14px; }
+
         .action-container { display: none; margin-top: 20px; }
-        table { width: 100%; border-collapse: collapse; border: 1px solid #00ff00; background: #000; }
+        table { width: 100%; border-collapse: collapse; border: 1px solid #00ff00; background: #000; margin-top: 15px; }
         th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; font-size: 17px; }
         th { color: #ff3333; background: rgba(0,255,0,0.1); width: 35%; }
         
         .signature-area { margin-top: 30px; font-family: 'Orbitron', sans-serif; font-size: 13px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px; }
-        
+
+        /* Expiry Screen */
         #expiry-screen {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black; color: red;
-            z-index: 9999; flex-direction: column;
-            justify-content: center; align-items: center;
-            font-family: 'Orbitron', sans-serif;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; color: red; z-index: 11000; flex-direction: column;
+            justify-content: center; align-items: center; font-family: 'Orbitron';
         }
     </style>
 </head>
 <body>
 
-<div id="expiry-screen">
-    <i class="fas fa-user-slash" style="font-size: 80px; margin-bottom: 20px;"></i>
-    <h1>ACCESS EXPIRED</h1>
-    <p>System auto-locked after 24 hours.</p>
+<div id="login-screen">
+    <div class="login-box">
+        <h2><i class="fas fa-lock"></i> SYSTEM LOCKED</h2>
+        <input type="password" id="pass-input" placeholder="ENTER SECURITY CODE">
+        <br>
+        <button class="btn search-btn" onclick="checkPass()">LOGIN SYSTEM</button>
+        <p id="login-error" style="color: #ff3333; display: none; margin-top: 15px; font-weight: bold;">ACCESS DENIED: WRONG CODE</p>
+    </div>
 </div>
 
-<div class="header">🛰️ MUDASIR CLOUD SCANNER V4.0 🛰️</div>
+<div id="expiry-screen">
+    <i class="fas fa-user-clock" style="font-size: 80px; margin-bottom: 20px;"></i>
+    <h1>TRIAL EXPIRED</h1>
+    <p>Your 5-minute session has ended.</p>
+    <p style="font-size: 12px; color: #444;">Contact Admin Mudasir for full access.</p>
+</div>
 
-<div class="container" id="app-content">
+<div id="app-content">
+    <div class="header">🛰️ MUDASIR CLOUD SCANNER V4.0 🛰️</div>
+    
     <div class="timer-container">
-        <span style="color: #fff; font-size: 12px; display: block; margin-bottom: 5px; font-family: 'Orbitron';">TIME REMAINING</span>
-        <div id="timer-display">24:00:00</div>
+        <span style="color: #fff; font-size: 11px; display: block; font-family: 'Orbitron'; margin-bottom: 5px;">SESSION TIME LEFT</span>
+        <div id="timer-display">05:00</div>
     </div>
 
     <div class="box">
@@ -90,6 +103,7 @@
 </div>
 
 <script>
+    // Records Database
     const database = [
         ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "https://www.google.com/maps/search/$"],
         ["MUHAMMAD ASLAM", "03080489093", "3120131503125", "DAAK KHANA WAHI JOGYAN NAND PURA TEHSIL L BAHAWALPUR GPO", "https://maps.app.goo.gl/J78uJxK7tJR7H7rz7"],
@@ -97,42 +111,46 @@
     ];
 
     let current = null;
+    let timerStarted = false;
 
-    // --- 24 HOUR PERSISTENT TIMER LOGIC ---
-    const TOTAL_TIME = 24 * 60 * 60; 
-
-    function initTimer() {
-        let startTime = localStorage.getItem('mudasir_start_time');
-        if (!startTime) {
-            startTime = Date.now();
-            localStorage.setItem('mudasir_start_time', startTime);
+    // Security Password Logic
+    function checkPass() {
+        const pass = document.getElementById("pass-input").value;
+        if (pass === "786mudasir") {
+            document.getElementById("login-screen").style.display = "none";
+            document.getElementById("app-content").style.display = "block";
+            if (!timerStarted) {
+                startFiveMinuteTimer();
+                timerStarted = true;
+            }
+        } else {
+            const err = document.getElementById("login-error");
+            err.style.display = "block";
+            setTimeout(() => { err.style.display = "none"; }, 3000);
         }
+    }
 
-        setInterval(() => {
-            let currentTime = Date.now();
-            let elapsed = Math.floor((currentTime - startTime) / 1000);
-            let timeLeft = TOTAL_TIME - elapsed;
+    // 5-Minute Timer Logic
+    function startFiveMinuteTimer() {
+        let timeLeft = 5 * 60; // 300 seconds
+        const timerDisplay = document.getElementById("timer-display");
+        
+        const countdown = setInterval(() => {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            
+            timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
 
             if (timeLeft <= 0) {
+                clearInterval(countdown);
                 document.getElementById("expiry-screen").style.display = "flex";
                 document.getElementById("app-content").style.display = "none";
-                localStorage.removeItem('mudasir_start_time');
-            } else {
-                updateTimerDisplay(timeLeft);
             }
+            timeLeft--;
         }, 1000);
     }
 
-    function updateTimerDisplay(seconds) {
-        let h = Math.floor(seconds / 3600);
-        let m = Math.floor((seconds % 3600) / 60);
-        let s = seconds % 60;
-        h = h < 10 ? "0" + h : h; m = m < 10 ? "0" + m : m; s = s < 10 ? "0" + s : s;
-        document.getElementById("timer-display").innerText = `${h}:${m}:${s}`;
-    }
-
-    window.onload = initTimer;
-
+    // Search Logic
     function processSearch() {
         const val = document.getElementById("search-input").value.trim();
         const area = document.getElementById("result-area");
@@ -150,34 +168,40 @@
                 <tr><th>LOCATION</th><td>${res[3]}</td></tr>
             </table>`;
             
-            // RIAZ KHAN ke liye Red button, baaki ke liye Blue
-            mapBtn.className = (res[0] === "RIAZ KHAN") ? "btn map-btn-red" : "btn map-btn";
+            // RIAZ KHAN ke liye Red button, baki ke liye Blue
+            if(res[0] === "RIAZ KHAN") {
+                mapBtn.className = "btn map-btn-red";
+            } else {
+                mapBtn.className = "btn map-btn";
+            }
             mapBtn.innerHTML = `<i class="fas fa-map-marked-alt"></i> SEE ON GOOGLE MAP`;
-            
             actions.style.display = "block";
         } else {
             current = null;
-            area.innerHTML = "<p style='color:red;'>🚫 RECORD NOT FOUND</p>";
+            area.innerHTML = "<p style='color:red; margin-top:20px; font-weight:bold;'>🚫 RECORD NOT FOUND IN CLOUD</p>";
             actions.style.display = "none";
         }
     }
 
+    // Map Redirect
     function openMap() {
-        if(current && current[4] !== "") {
+        if(current && current[4]) {
             window.open(current[4], '_blank');
         }
     }
 
+    // PDF Export
     function downloadPDF() {
         if(!current) return;
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         doc.setFillColor(0, 0, 0); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(0, 255, 0); doc.setFontSize(22); doc.text("MUDASIR CLOUD DATA SLIP", 40, 25);
+        doc.setTextColor(0, 255, 0); doc.setFontSize(22); doc.text("MUDASIR CLOUD DATA", 40, 25);
         doc.setTextColor(0, 0, 0); doc.setFontSize(14);
-        doc.text(`FULL NAME: ${current[0]}`, 20, 60);
-        doc.text(`MOBILE NO: ${current[1]}`, 20, 70);
-        doc.text(`CNIC NO: ${current[2]}`, 20, 80);
+        doc.text(`NAME: ${current[0]}`, 20, 60);
+        doc.text(`NUMBER: ${current[1]}`, 20, 70);
+        doc.text(`CNIC: ${current[2]}`, 20, 80);
+        doc.text(`ADDRESS: ${current[3]}`, 20, 90);
         doc.save(`Record_${current[1]}.pdf`);
     }
 </script>
