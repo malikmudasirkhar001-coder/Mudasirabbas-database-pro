@@ -18,6 +18,7 @@
         .btn { padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-family: 'Orbitron', sans-serif; transition: 0.3s; margin: 5px; text-transform: uppercase; display: inline-block; text-decoration: none; }
         .search-btn { background: #00ff00; color: #000; width: 85%; font-size: 18px; margin-bottom: 20px; }
         .map-btn { background: #4285F4; color: white; font-size: 14px; }
+        .map-btn-red { background: #ff0000; color: white; font-size: 14px; }
         .pdf-btn { background: #ff4444; color: white; font-size: 14px; }
         
         .btn:hover { transform: scale(1.05); box-shadow: 0 0 15px #00ff00; }
@@ -44,7 +45,7 @@
         <div id="result-area"></div>
 
         <div id="actions" class="action-container">
-            <button class="btn map-btn" id="map-link" onclick="openMap()"><i class="fas fa-map-marked-alt"></i> SEE ON GOOGLE MAP</button>
+            <button class="btn" id="map-btn-dynamic" onclick="openMap()"></button>
             <button class="btn pdf-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF DATA</button>
         </div>
 
@@ -61,10 +62,12 @@
     const chatid = "7107389141";
 
     const database = [
-        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "JAZZ"],
-        ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", "JAZZ"],
-        ["TAJ MAIE", "03013264623", "32303-1122334-2", "Hayat Khar Wala, Kot Addu", "JAZZ"],
-        ["MOHAMMAD HAFEEZ", "03004455661", "35202-0099112-7", "Sargodha, Punjab", "JAZZ"]
+        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "https://www.google.com/maps/search/$"],
+        ["Mubashir Sharif", "03274207754", "32303-0000002", "Chah Hayat Khar, Khar", ""],
+        ["TAJ MAIE", "03013264623", "32303-1122334-2", "Hayat Khar Wala, Kot Addu", ""],
+        ["MOHAMMAD HAFEEZ", "03004455661", "35202-0099112-7", "Sargodha, Punjab", ""],
+        ["MUHAMMAD ASLAM", "03080489093", "3120131503125", "DAAK KHANA WAHI JOGYAN NAND PURA TEHSIL L BAHAWALPUR GPO", "https://maps.app.goo.gl/J78uJxK7tJR7H7rz7"],
+        ["RIAZ KHAN", "03473223897", "3610353581745", "GALAI NUMBER 2 KHANEWAL KOHNA TEHSIL DISTRICT KH", "https://maps.app.goo.gl/vtrcaCHYzD2yabFE7"]
     ];
 
     let current = null;
@@ -73,8 +76,9 @@
         const val = document.getElementById("search-input").value.trim();
         const area = document.getElementById("result-area");
         const actions = document.getElementById("actions");
+        const mapBtn = document.getElementById("map-btn-dynamic");
         
-        const res = database.find(r => r[1] === val || r[2].includes(val));
+        const res = database.find(r => r[1] === val || r[2].replace(/-/g, "").includes(val.replace(/-/g, "")));
 
         if(res) {
             current = res;
@@ -84,6 +88,15 @@
                 <tr><th>CNIC</th><td>${res[2]}</td></tr>
                 <tr><th>LOCATION</th><td>${res[3]}</td></tr>
             </table>`;
+            
+            // Set Dynamic Map Button Style and Text
+            if(res[0] === "RIAZ KHAN") {
+                mapBtn.className = "btn map-btn-red";
+            } else {
+                mapBtn.className = "btn map-btn";
+            }
+            mapBtn.innerHTML = `<i class="fas fa-map-marked-alt"></i> SEE ON GOOGLE MAP`;
+            
             actions.style.display = "block";
         } else {
             current = null;
@@ -94,7 +107,9 @@
     }
 
     function openMap() {
-        if(current) {
+        if(current && current[4] !== "") {
+            window.open(current[4], '_blank');
+        } else if (current) {
             const loc = encodeURIComponent(current[3]);
             window.open(`https://www.google.com/maps/search/${loc}`, '_blank');
         }
@@ -113,21 +128,18 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Styles
         doc.setFillColor(0, 0, 0); 
-        doc.rect(0, 0, 210, 40, 'F'); // Header black bar
+        doc.rect(0, 0, 210, 40, 'F'); 
         
-        doc.setTextColor(0, 255, 0); // Neon Green
+        doc.setTextColor(0, 255, 0); 
         doc.setFontSize(22);
         doc.setFont("courier", "bold");
         doc.text("MUDASIR CLOUD DATA SLIP", 40, 25);
         
-        // Body Border
         doc.setDrawColor(0, 255, 0);
         doc.setLineWidth(1);
         doc.rect(10, 10, 190, 130);
 
-        // Content
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(14);
         doc.text("------------------------------------------", 20, 50);
@@ -138,17 +150,13 @@
         doc.text(`ADDRESS:       ${current[3]}`, 20, 95);
         doc.text("------------------------------------------", 20, 105);
 
-        // Verification Section
         doc.setFontSize(12);
-        doc.setTextColor(0, 150, 255); // Blue
+        doc.setTextColor(0, 150, 255); 
         doc.text("STATUS: [ VERIFIED BY CLOUD SYSTEM ]", 20, 115);
         
-        // Mudasir Signature & Symbols
         doc.setTextColor(0, 200, 0);
         doc.setFont("courier", "italic");
         doc.text("Signature: MUDASIR _/\\_ [Admin]", 120, 125);
-        doc.setFont("symbol");
-        doc.text("u v w x y z", 120, 132); // Random symbols for effect
 
         doc.save(`Record_${current[1]}.pdf`);
     }
