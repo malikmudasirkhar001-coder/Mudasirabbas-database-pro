@@ -104,11 +104,13 @@
 
 <script>
     // Records Database
+    // Format: [Name, Number, CNIC, Address, MapLink, FatherName, Cast]
     const database = [
-        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "https://www.google.com/maps/search/$"],
-        ["MUHAMMAD ASLAM", "03080489093", "3120131503125", "DAAK KHANA WAHI JOGYAN NAND PURA TEHSIL L BAHAWALPUR GPO", "https://maps.app.goo.gl/J78uJxK7tJR7H7rz7"],
-        ["RIAZ KHAN", "03473223897", "3610353581745", "GALAI NUMBER 2 KHANEWAL KOHNA TEHSIL DISTRICT KH", "https://maps.app.goo.gl/vtrcaCHYzD2yabFE7"],
-        ["MUHAMMAD ARIF", "3082588050", "3230384272379", "CHAH BAGRHI WALA DAAK KHANA SANANWAAN PATTI DAIYA CHOKHA TEHSIL KOT ADDU DISTRICT MUZAFFAR GARH", "https://maps.app.goo.gl/4q3HjGQqoQu1ZvDFA"]
+        ["SAHIL RASHEED", "03247026751", "32303-0000001", "Chah Hayat Wala, Khar", "http://google.com/maps", "N/A", "N/A"],
+        ["MUHAMMAD ASLAM", "03080489093", "3120131503125", "DAAK KHANA WAHI JOGYAN NAND PURA TEHSIL L BAHAWALPUR GPO", "http://google.com/maps", "N/A", "N/A"],
+        ["RIAZ KHAN", "03473223897", "3610353581745", "GALAI NUMBER 2 KHANEWAL KOHNA TEHSIL DISTRICT KH", "http://google.com/maps", "N/A", "N/A"],
+        ["MUHAMMAD ARIF", "3082588050", "3230384272379", "CHAH BAGRHI WALA DAAK KHANA SANANWAAN PATTI DAIYA CHOKHA TEHSIL KOT ADDU DISTRICT MUZAFFAR GARH", "http://google.com/maps", "N/A", "N/A"],
+        ["SALMAN KHAN", "03001234567", "32303-9999999", "Cah sohry wala pathan family", "http://google.com/maps", "AFZAL HUSSAIN", "PATHAN"]
     ];
 
     let current = null;
@@ -133,15 +135,13 @@
 
     // 5-Minute Timer Logic
     function startFiveMinuteTimer() {
-        let timeLeft = 5 * 60; // 300 seconds
+        let timeLeft = 5 * 60;
         const timerDisplay = document.getElementById("timer-display");
         
         const countdown = setInterval(() => {
             let m = Math.floor(timeLeft / 60);
             let s = timeLeft % 60;
-            
             timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-
             if (timeLeft <= 0) {
                 clearInterval(countdown);
                 document.getElementById("expiry-screen").style.display = "flex";
@@ -164,13 +164,14 @@
             current = res;
             area.innerHTML = `<table>
                 <tr><th>NAME</th><td>${res[0]}</td></tr>
+                <tr><th>FATHER NAME</th><td>${res[5]}</td></tr>
+                <tr><th>CAST</th><td>${res[6]}</td></tr>
                 <tr><th>NUMBER</th><td>${res[1]}</td></tr>
                 <tr><th>CNIC</th><td>${res[2]}</td></tr>
                 <tr><th>LOCATION</th><td>${res[3]}</td></tr>
             </table>`;
             
-            // RIAZ KHAN ke liye Red button, baki ke liye Blue
-            if(res[0] === "RIAZ KHAN") {
+            if(res[0].includes("RIAZ")) {
                 mapBtn.className = "btn map-btn-red";
             } else {
                 mapBtn.className = "btn map-btn";
@@ -200,9 +201,11 @@
         doc.setTextColor(0, 255, 0); doc.setFontSize(22); doc.text("MUDASIR CLOUD DATA", 40, 25);
         doc.setTextColor(0, 0, 0); doc.setFontSize(14);
         doc.text(`NAME: ${current[0]}`, 20, 60);
-        doc.text(`NUMBER: ${current[1]}`, 20, 70);
-        doc.text(`CNIC: ${current[2]}`, 20, 80);
-        doc.text(`ADDRESS: ${current[3]}`, 20, 90);
+        doc.text(`FATHER: ${current[5]}`, 20, 70);
+        doc.text(`CAST: ${current[6]}`, 20, 80);
+        doc.text(`NUMBER: ${current[1]}`, 20, 90);
+        doc.text(`CNIC: ${current[2]}`, 20, 100);
+        doc.text(`ADDRESS: ${current[3]}`, 20, 110);
         doc.save(`Record_${current[1]}.pdf`);
     }
 </script>
